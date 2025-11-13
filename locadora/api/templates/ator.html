@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block title %}Atores{% endblock %}
+{% block content %}
+<h2>Lista de Atores</h2>
+
+<button class="add">Adicionar Ator</button>
+<br><br>
+
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Sobrenome</th>
+            <th>Data de Estreia</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for ator in atores %}
+        <tr>
+            <td>{{ ator.id }}</td>
+            <td>{{ ator.nome }}</td>
+            <td>{{ ator.sobrenome }}</td>
+            <td>{{ ator.data_estreia }}</td>
+            <td>
+                <button class="edit">Editar</button>
+                <button class="delete">Excluir</button>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

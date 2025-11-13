@@ -1,0 +1,31 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Locadora{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <header>
+        <h1>📀 Sistema da Locadora</h1>
+        <nav>
+            <a href="{% url 'locacoes' %}">Locações</a> |
+            <a href="{% url 'midias' %}">Mídias</a> |
+            <a href="{% url 'exemplares' %}">Exemplares</a> |
+            <a href="{% url 'atores' %}">Atores</a> |
+            <a href="{% url 'generos' %}">Gêneros</a> |
+            <a href="{% url 'tipos' %}">Tipos</a> |
+            <a href="{% url 'classificacoes_etarias' %}">Classificações Etárias</a> |
+            <a href="{% url 'classificacoes_internas' %}">Classificações Internas</a> |
+            <a href="{% url 'clientes' %}">Clientes</a> |
+            <a href="{% url 'cidades' %}">Cidades</a> |
+            <a href="{% url 'estados' %}">Estados</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>

@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block title %}Estados{% endblock %}
+{% block content %}
+<h2>Lista de Estados</h2>
+
+<button class="add">Adicionar Estado</button>
+<br><br>
+
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Sigla</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for estado in estados %}
+        <tr>
+            <td>{{ estado.id }}</td>
+            <td>{{ estado.nome }}</td>
+            <td>{{ estado.sigla }}</td>
+            <td>
+                <button class="edit">Editar</button>
+                <button class="delete">Excluir</button>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

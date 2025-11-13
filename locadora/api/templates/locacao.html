@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block title %}Atores{% endblock %}
+{% block content %}
+<h2>Lista de Atores</h2>
+
+<button class="add">Adicionar Ator</button>
+<br><br>
+
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Data de Início</th>
+            <th>Data de Fim</th>
+            <th>Cancelada</th>
+            <th>Cliente ID</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for locacao in locacoes %}
+        <tr>
+            <td>{{ locacao.id }}</td>
+            <td>{{ locacao.data_inicio }}</td>
+            <td>{{ locacao.data_fim }}</td>
+            <td>{{ locacao.cancelada }}</td>
+            <td>{{ locacao.cliente_id }}</td>
+            <td>
+                <button class="edit">Editar</button>
+                <button class="delete">Excluir</button>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

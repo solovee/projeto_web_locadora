@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %}Classificações Etárias{% endblock %}
+{% block content %}
+<h2>Lista de Classificações Etárias</h2>
+
+<button class="add">Adicionar Classificação Etária</button>
+<br><br>
+
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Descrição</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for classificacao in classificacoes %}
+        <tr>
+            <td>{{ classificacao.id }}</td>
+            <td>{{ classificacao.descricao }}</td>  
+            <td>
+                <button class="edit">Editar</button>
+                <button class="delete">Excluir</button>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

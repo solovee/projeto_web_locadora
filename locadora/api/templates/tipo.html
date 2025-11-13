@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %}Tipos{% endblock %}
+{% block content %}
+<h2>Lista de Tipos</h2>
+
+<button class="add">Adicionar Tipo</button>
+<br><br>
+
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Descrição</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for tipo in tipos %}
+        <tr>
+            <td>{{ tipo.id }}</td>
+            <td>{{ tipo.descricao }}</td>  
+            <td>
+                <button class="edit">Editar</button>
+                <button class="delete">Excluir</button>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

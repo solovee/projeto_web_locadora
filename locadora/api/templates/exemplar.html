@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block title %}Exemplares{% endblock %}
+{% block content %}
+<h2>Lista de Exemplares</h2>
+
+<button class="add">Adicionar Exemplar</button>
+<br><br>
+
+<table>
+    <thead>
+        <tr>
+            <th>Código Interno</th>
+            <th>Disponível</th>
+            <th>Mídia ID</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for exemplar in exemplares %}
+        <tr>
+            <td>{{ exemplar.codigo_interno }}</td>
+            <td>{{ exemplar.disponivel }}</td>
+            <td>{{ exemplar.midia_id }}</td>
+            <td>
+                <button class="edit">Editar</button>
+                <button class="delete">Excluir</button>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
