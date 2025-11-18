@@ -55,3 +55,7 @@ def midia_list(request):
     midias = Midia.objects.all()
     return render(request, 'midia.html', {'midias': midias})
 
+def home(request):
+    return render(request, 'index.html')
+
+

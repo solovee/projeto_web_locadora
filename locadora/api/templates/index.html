@@ -1,0 +1,125 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Locadora - Dashboard</title>
+    <!-- Incluindo o Tailwind CSS para um design moderno e responsivo -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    
+</head>
+<body>
+    <header class="main-header">
+        <h1 class="text-4xl font-extrabold mb-1">
+            <span class="text-yellow-400">📀</span> Sistema da Locadora
+        </h1>
+        <!-- A navegação tradicional (nav) foi removida do header para focar no dashboard de cards abaixo. -->
+    </header>
+
+    <div class="container mx-auto px-4 md:px-8 pt-8 pb-12">
+        {% block content %}
+        <h2 class="text-3xl font-bold mb-8 text-gray-800 text-center">Dashboard</h2>
+
+        <!-- Grid para os Cartões de Navegação (Totalmente Responsivo) -->
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+
+            <!-- LOCAÇÕES -->
+            <a href="{% url 'locacoes' %}" class="nav-card text-white p-6 rounded-xl shadow-xl">
+                <div class="flex flex-col items-center">
+                    <svg class="w-10 h-10 mb-3 text-yellow-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2zm3-7h3m-3 4h3m-6-4h.01M18 14h.01"></path></svg>
+                    <span class="text-lg font-semibold nav-card-text">Locações</span>
+                </div>
+            </a>
+
+            <!-- MÍDIAS -->
+            <a href="{% url 'midias' %}" class="nav-card text-white p-6 rounded-xl shadow-xl">
+                <div class="flex flex-col items-center">
+                    <svg class="w-10 h-10 mb-3 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                    <span class="text-lg font-semibold nav-card-text">Mídias</span>
+                </div>
+            </a>
+
+            <!-- EXEMPLARES -->
+            <a href="{% url 'exemplares' %}" class="nav-card text-white p-6 rounded-xl shadow-xl">
+                <div class="flex flex-col items-center">
+                    <svg class="w-10 h-10 mb-3 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 2l-3 3m0 0l3 3m-3-3h10a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2z"></path></svg>
+                    <span class="text-lg font-semibold nav-card-text">Exemplares</span>
+                </div>
+            </a>
+
+            <!-- CLIENTES -->
+            <a href="{% url 'clientes' %}" class="nav-card text-white p-6 rounded-xl shadow-xl">
+                <div class="flex flex-col items-center">
+                    <svg class="w-10 h-10 mb-3 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6m-3 0a9 9 0 00-9-9 9 9 0 00-9 9m-1-5v-1m1-1v1"></path></svg>
+                    <span class="text-lg font-semibold nav-card-text">Clientes</span>
+                </div>
+            </a>
+
+            <!-- ATORES -->
+            <a href="{% url 'atores' %}" class="nav-card text-white p-6 rounded-xl shadow-xl">
+                <div class="flex flex-col items-center">
+                    <svg class="w-10 h-10 mb-3 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>
+                    <span class="text-lg font-semibold nav-card-text">Atores</span>
+                </div>
+            </a>
+
+            <!-- GÊNEROS -->
+            <a href="{% url 'generos' %}" class="nav-card text-white p-6 rounded-xl shadow-xl">
+                <div class="flex flex-col items-center">
+                    <svg class="w-10 h-10 mb-3 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 4v16M17 4v16M3 8h4m6-4v16m4-10h4m-4 0h4m-4 0h4m-4 0h4"></path></svg>
+                    <span class="text-lg font-semibold nav-card-text">Gêneros</span>
+                </div>
+            </a>
+
+            <!-- TIPOS -->
+            <a href="{% url 'tipos' %}" class="nav-card text-white p-6 rounded-xl shadow-xl">
+                <div class="flex flex-col items-center">
+                    <svg class="w-10 h-10 mb-3 text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12m-9-6h9m-9-4h9m-6-4h.01"></path></svg>
+                    <span class="text-lg font-semibold nav-card-text">Tipos</span>
+                </div>
+            </a>
+
+            <!-- CLASSIFICAÇÕES ETÁRIAS -->
+            <a href="{% url 'classificacoes_etarias' %}" class="nav-card text-white p-6 rounded-xl shadow-xl">
+                <div class="flex flex-col items-center text-center">
+                    <svg class="w-10 h-10 mb-3 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    <span class="text-lg font-semibold nav-card-text">Classificações Etárias</span>
+                </div>
+            </a>
+
+            <!-- CLASSIFICAÇÕES INTERNAS -->
+            <a href="{% url 'classificacoes_internas' %}" class="nav-card text-white p-6 rounded-xl shadow-xl">
+                <div class="flex flex-col items-center text-center">
+                    <svg class="w-10 h-10 mb-3 text-lime-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.01 12.01 0 002.92 7.643 13.96 13.96 0 003.54 9.385C4.264 12.08 6.476 15.65 12 20.57c5.524-4.92 7.736-8.49 8.46-11.185a13.96 13.96 0 00-.62-1.742 12.01 12.01 0 00-1.077-1.123z"></path></svg>
+                    <span class="text-lg font-semibold nav-card-text">Classificações Internas</span>
+                </div>
+            </a>
+
+            <!-- CIDADES -->
+            <a href="{% url 'cidades' %}" class="nav-card text-white p-6 rounded-xl shadow-xl">
+                <div class="flex flex-col items-center">
+                    <svg class="w-10 h-10 mb-3 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-7 0H3m4 0h7"></path></svg>
+                    <span class="text-lg font-semibold nav-card-text">Cidades</span>
+                </div>
+            </a>
+
+            <!-- ESTADOS -->
+            <a href="{% url 'estados' %}" class="nav-card text-white p-6 rounded-xl shadow-xl">
+                <div class="flex flex-col items-center">
+                    <svg class="w-10 h-10 mb-3 text-fuchsia-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.828 0l-4.243-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                    <span class="text-lg font-semibold nav-card-text">Estados</span>
+                </div>
+            </a>
+
+        </div>
+
+        <div class="mt-12 p-6 bg-white border border-gray-200 rounded-xl shadow-lg text-gray-700 text-center">
+            <p class="font-medium">Bem-vindo(a) ao sistema. Utilize o dashboard acima para gerenciar todos os aspectos da Locadora, desde as mídias e exemplares até os clientes e classificações.</p>
+        </div>
+
+        {% endblock %}
+    </div>
+</body>
+</html>

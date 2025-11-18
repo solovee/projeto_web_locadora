@@ -19,6 +19,7 @@ from django.contrib import admin
 from django.urls import path
 
 urlpatterns = [
+    path('', views.home, name='home'),
     path('atores/', views.ator_list, name='atores'),
     path('cidades/', views.cidade_list, name='cidades'),
     path('clientes/', views.cliente_list, name='clientes'),
