@@ -75,7 +75,12 @@ function abrirFormulario(id = null, descricao = "", valor_aluguel = 0) {
 
             <label>Valor Aluguel</label>
             <input type="number" id="valor_aluguel" value="${valor_aluguel}" step="0.01">
-            <button class="modal-save" onclick="${id ? `salvarEdicao(${id})` : "criarClassificacao()"}">Salvar</button>
+            <button class="modal-save"
+                onclick="${id ? `salvarEdicao(${id})` : `criarClassificacao()`}">
+                Salvar
+            </button>
+
+
             <button class="modal-cancel" onclick="fecharModal()">Cancelar</button>
         </div>
     `;
