@@ -1,4 +1,6 @@
 {% extends 'base.html' %}
+{% load static %} 
+
 {% block title %}Classificações Etárias{% endblock %}
 {% block content %}
 <h2>Lista de Classificações Etárias</h2>
@@ -14,17 +16,10 @@
             <th>Ações</th>
         </tr>
     </thead>
-    <tbody>
-        {% for classificacao in classificacoes %}
-        <tr>
-            <td>{{ classificacao.id }}</td>
-            <td>{{ classificacao.descricao }}</td>  
-            <td>
-                <button class="edit">Editar</button>
-                <button class="delete">Excluir</button>
-            </td>
-        </tr>
-        {% endfor %}
+     <tbody>
     </tbody>
 </table>
+
+<script src="{% static 'api/js/classificacoes_etarias.js' %}"></script>
+
 {% endblock %}

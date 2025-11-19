@@ -1,4 +1,6 @@
 {% extends 'base.html' %}
+{% load static %} 
+
 {% block title %}Cidades{% endblock %}
 {% block content %}
 <h2>Lista de Cidades</h2>
@@ -15,18 +17,10 @@
             <th>Ações</th>
         </tr>
     </thead>
-    <tbody>
-        {% for cidade in cidades %}
-        <tr>
-            <td>{{ cidade.id }}</td>
-            <td>{{ cidade.nome }}</td>
-            <td>{{ cidade.estado }}</td>
-            <td>
-                <button class="edit">Editar</button>
-                <button class="delete">Excluir</button>
-            </td>
-        </tr>
-        {% endfor %}
+     <tbody>
     </tbody>
 </table>
+
+<script src="{% static 'api/js/cidades.js' %}"></script>
+
 {% endblock %}

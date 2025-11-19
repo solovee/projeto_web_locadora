@@ -1,4 +1,6 @@
 {% extends 'base.html' %}
+{% load static %} 
+
 {% block title %}Estados{% endblock %}
 {% block content %}
 <h2>Lista de Estados</h2>
@@ -15,18 +17,10 @@
             <th>Ações</th>
         </tr>
     </thead>
-    <tbody>
-        {% for estado in estados %}
-        <tr>
-            <td>{{ estado.id }}</td>
-            <td>{{ estado.nome }}</td>
-            <td>{{ estado.sigla }}</td>
-            <td>
-                <button class="edit">Editar</button>
-                <button class="delete">Excluir</button>
-            </td>
-        </tr>
-        {% endfor %}
+     <tbody>
     </tbody>
 </table>
+
+<script src="{% static 'api/js/estados.js' %}"></script>
+
 {% endblock %}

@@ -1,4 +1,9 @@
+
+
+
 {% extends 'base.html' %}
+{% load static %} 
+
 {% block title %}Gêneros{% endblock %}
 {% block content %}
 <h2>Lista de Gêneros</h2>
@@ -14,17 +19,11 @@
             <th>Ações</th>
         </tr>
     </thead>
-    <tbody>
-        {% for genero in generos %}
-        <tr>
-            <td>{{ genero.id }}</td>
-            <td>{{ genero.descricao }}</td>
-            <td>
-                <button class="edit">Editar</button>
-                <button class="delete">Excluir</button>
-            </td>
-        </tr>
-        {% endfor %}
+     <tbody>
     </tbody>
 </table>
+
+<script src="{% static 'api/js/generos.js' %}"></script>
+
 {% endblock %}
+

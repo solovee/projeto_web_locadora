@@ -1,4 +1,7 @@
+
 {% extends 'base.html' %}
+{% load static %} 
+
 {% block title %}Classificações Internas{% endblock %}
 {% block content %}
 <h2>Lista de Classificações Internas</h2>
@@ -15,18 +18,10 @@
             <th>Ações</th>
         </tr>
     </thead>
-    <tbody>
-        {% for classificacao_in in classificacoes_internas %}
-        <tr>
-            <td>{{ classificacao_in.id }}</td>
-            <td>{{ classificacao_in.descricao }}</td>  
-            <td>{{ classificacao_in.valor_aluguel }}</td>
-            <td>
-                <button class="edit">Editar</button>
-                <button class="delete">Excluir</button>
-            </td>
-        </tr>
-        {% endfor %}
+     <tbody>
     </tbody>
 </table>
+
+<script src="{% static 'api/js/classificacoes_internas.js' %}"></script>
+
 {% endblock %}

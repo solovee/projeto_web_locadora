@@ -1,4 +1,6 @@
 {% extends 'base.html' %}
+{% load static %} 
+
 {% block title %}Locações{% endblock %}
 {% block content %}
 <h2>Lista de Locações</h2>
@@ -17,20 +19,11 @@
             <th>Ações</th>
         </tr>
     </thead>
-    <tbody>
-        {% for locacao in locacoes %}
-        <tr>
-            <td>{{ locacao.id }}</td>
-            <td>{{ locacao.data_inicio }}</td>
-            <td>{{ locacao.data_fim }}</td>
-            <td>{{ locacao.cancelada }}</td>
-            <td>{{ locacao.cliente_id }}</td>
-            <td>
-                <button class="edit">Editar</button>
-                <button class="delete">Excluir</button>
-            </td>
-        </tr>
-        {% endfor %}
+     <tbody>
     </tbody>
 </table>
+
+<script src="{% static 'api/js/locacoes.js' %}"></script>
+
 {% endblock %}
+

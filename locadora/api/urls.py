@@ -21,11 +21,21 @@ from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from . import views
 # Importe a ViewSet da API
-from .views import AtorViewSet 
+from .views import AtorViewSet, CidadeViewSet, ClassificacaoEtariaViewSet, ClassificacaoInternaViewSet, ClienteViewSet, EstadoViewSet, TipoViewSet, GeneroViewSet, ExemplarViewSet, MidiaViewSet, LocacaoViewSet
 
 # Cria um roteador para as Viewsets
 router = DefaultRouter()
 router.register(r'atores', AtorViewSet) # Rota: /api/atores/
+router.register(r'cidades', CidadeViewSet) # Rota: /api/cidades/
+router.register(r'classificacoes_etarias', ClassificacaoEtariaViewSet) # Rota: /api/classificacoes_etarias/
+router.register(r'classificacoes_internas', ClassificacaoInternaViewSet) # Rota: /api/classificacoes_internas/
+router.register(r'clientes', ClienteViewSet) # Rota: /api/clientes/
+router.register(r'estados', EstadoViewSet) # Rota: /api/estados/
+router.register(r'tipos', TipoViewSet) # Rota: /api/tipos/
+router.register(r'generos', GeneroViewSet) # Rota: /api/generos/
+router.register(r'exemplares', ExemplarViewSet) # Rota: /api/exemplares/
+router.register(r'midias', MidiaViewSet) # Rota: /api/midias/
+router.register(r'locacoes', LocacaoViewSet) # Rota: /api/locacoes/
 
 urlpatterns = [
     # Rotas de Template

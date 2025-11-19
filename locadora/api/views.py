@@ -8,13 +8,63 @@ from .models import Ator, Cidade, ClassificacaoEtaria, ClassificacaoInterna, Cli
 
 from rest_framework import viewsets
 from .models import Ator
-from .serializers import AtorSerializer
+from .serializers import AtorSerializer, CidadeSerializer, ClassificacaoEtariaSerializer, ClassificacaoInternaSerializer, ClienteSerializer, EstadoSerializer, ExemplarSerializer, GeneroSerializer, LocacaoSerializer, MidiaSerializer, TipoSerializer
 
 # Esta Viewset fornece os endpoints: GET (lista e detalhe), POST, PUT/PATCH, DELETE
 class AtorViewSet(viewsets.ModelViewSet):
     queryset = Ator.objects.all()
     serializer_class = AtorSerializer
 
+
+class CidadeViewSet(viewsets.ModelViewSet):
+    queryset = Cidade.objects.all()
+    # Você precisará criar um serializer para Cidade similar ao AtorSerializer
+    serializer_class = CidadeSerializer
+
+class ClassificacaoEtariaViewSet(viewsets.ModelViewSet):
+    queryset = ClassificacaoEtaria.objects.all()
+    # Você precisará criar um serializer para ClassificacaoEtaria similar ao AtorSerializer
+    serializer_class = ClassificacaoEtariaSerializer
+
+class ClassificacaoInternaViewSet(viewsets.ModelViewSet):
+    queryset = ClassificacaoInterna.objects.all()
+    # Você precisará criar um serializer para ClassificacaoInterna similar ao AtorSerializer
+    serializer_class = ClassificacaoInternaSerializer
+
+class ClienteViewSet(viewsets.ModelViewSet):
+    queryset = Cliente.objects.all()
+    # Você precisará criar um serializer para Cliente similar ao AtorSerializer
+    serializer_class = ClienteSerializer
+class EstadoViewSet(viewsets.ModelViewSet):
+    queryset = Estado.objects.all()
+    # Você precisará criar um serializer para Estado similar ao AtorSerializer
+    serializer_class = EstadoSerializer
+
+class TipoViewSet(viewsets.ModelViewSet):
+    queryset = Tipo.objects.all()
+    # Você precisará criar um serializer para Tipo similar ao AtorSerializer
+    serializer_class = TipoSerializer
+
+class GeneroViewSet(viewsets.ModelViewSet):
+    queryset = Genero.objects.all()
+    # Você precisará criar um serializer para Genero similar ao AtorSerializer
+    serializer_class = GeneroSerializer
+
+class ExemplarViewSet(viewsets.ModelViewSet):
+    queryset = Exemplar.objects.all()
+    # Você precisará criar um serializer para Exemplar similar ao AtorSerializer
+    serializer_class = ExemplarSerializer
+
+
+class MidiaViewSet(viewsets.ModelViewSet):
+    queryset = Midia.objects.all()
+    # Você precisará criar um serializer para Midia similar ao AtorSerializer
+    serializer_class = MidiaSerializer
+
+class LocacaoViewSet(viewsets.ModelViewSet):
+    queryset = Locacao.objects.all()
+    # Você precisará criar um serializer para Locacao similar ao AtorSerializer
+    serializer_class = LocacaoSerializer
 # ... mantenha suas outras views
 
 def ator_list(request):

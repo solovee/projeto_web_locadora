@@ -1,4 +1,6 @@
 {% extends 'base.html' %}
+{% load static %} 
+
 {% block title %}Mídias{% endblock %}
 {% block content %}
 <h2>Lista de Mídias</h2>
@@ -23,26 +25,10 @@
             <th>Ações</th>
         </tr>
     </thead>
-    <tbody>
-        {% for midia in midias %}
-        <tr>
-            <td>{{ midia.id }}</td>
-            <td>{{ midia.titulo }}</td>
-            <td>{{ midia.ano_lancamento }}</td>
-            <td>{{ midia.codigo_barras }}</td>
-            <td>{{ midia.duracao_em_minutos }}</td>
-            <td>{{ midia.ator_principal }}</td>
-            <td>{{ midia.ator_coadjuvante }}</td>
-            <td>{{ midia.genero_id }}</td>
-            <td>{{ midia.classificacao_etaria_id }}</td>
-            <td>{{ midia.tipo_id }}</td>
-            <td>{{ midia.classificacao_interna_id }}</td>
-            <td>
-                <button class="edit">Editar</button>
-                <button class="delete">Excluir</button>
-            </td>
-        </tr>
-        {% endfor %}
+     <tbody>
     </tbody>
 </table>
+
+<script src="{% static 'api/js/midias.js' %}"></script>
+
 {% endblock %}

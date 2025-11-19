@@ -1,4 +1,6 @@
 {% extends 'base.html' %}
+{% load static %} 
+
 {% block title %}Exemplares{% endblock %}
 {% block content %}
 <h2>Lista de Exemplares</h2>
@@ -15,18 +17,10 @@
             <th>Ações</th>
         </tr>
     </thead>
-    <tbody>
-        {% for exemplar in exemplares %}
-        <tr>
-            <td>{{ exemplar.codigo_interno }}</td>
-            <td>{{ exemplar.disponivel }}</td>
-            <td>{{ exemplar.midia_id }}</td>
-            <td>
-                <button class="edit">Editar</button>
-                <button class="delete">Excluir</button>
-            </td>
-        </tr>
-        {% endfor %}
+     <tbody>
     </tbody>
 </table>
+
+<script src="{% static 'api/js/exemplares.js' %}"></script>
+
 {% endblock %}

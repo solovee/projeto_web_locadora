@@ -1,11 +1,12 @@
 {% extends 'base.html' %}
+{% load static %} 
+
 {% block title %}Clientes{% endblock %}
 {% block content %}
 <h2>Lista de Clientes</h2>
 
 <button class="add">Adicionar Cliente</button>
 <br><br>
-
 
 <table>
     <thead>
@@ -24,26 +25,11 @@
             <th>Ações</th>
         </tr>
     </thead>
-    <tbody>
-        {% for cliente in clientes %}
-        <tr>
-            <td>{{ cliente.id }}</td>
-            <td>{{ cliente.nome }}</td>
-            <td>{{ cliente.sobrenome }}</td>
-            <td>{{ cliente.data_nascimento }}</td>
-            <td>{{ cliente.cpf }}</td>
-            <td>{{ cliente.email }}</td>
-            <td>{{ cliente.logradouro }}</td>
-            <td>{{ cliente.numero }}</td>
-            <td>{{ cliente.bairro }}</td>
-            <td>{{ cliente.cep }}</td>
-            <td>{{ cliente.cidade_id }}</td>
-            <td>
-                <button class="edit">Editar</button>
-                <button class="delete">Excluir</button>
-            </td>
-        </tr>
-        {% endfor %}
+     <tbody>
     </tbody>
 </table>
+
+<script src="{% static 'api/js/clientes.js' %}"></script>
+
 {% endblock %}
+
