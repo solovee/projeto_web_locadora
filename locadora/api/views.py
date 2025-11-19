@@ -4,9 +4,22 @@ from django.shortcuts import render
 from django.shortcuts import render
 from .models import Ator, Cidade, ClassificacaoEtaria, ClassificacaoInterna, Cliente, Exemplar, Genero, Midia, Locacao, Estado, Tipo
 
+# SeuApp/views.py (ou api_views.py)
+
+from rest_framework import viewsets
+from .models import Ator
+from .serializers import AtorSerializer
+
+# Esta Viewset fornece os endpoints: GET (lista e detalhe), POST, PUT/PATCH, DELETE
+class AtorViewSet(viewsets.ModelViewSet):
+    queryset = Ator.objects.all()
+    serializer_class = AtorSerializer
+
+# ... mantenha suas outras views
+
 def ator_list(request):
-    atores = Ator.objects.all()
-    return render(request, 'ator.html', {'atores': atores})
+    # Não precisa mais de Ator.objects.all()
+    return render(request, 'ator.html', {}) # Não passe mais o contexto 'atores'
 
 def cliente_list(request):
     clientes = Cliente.objects.all()

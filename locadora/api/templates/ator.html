@@ -1,4 +1,6 @@
 {% extends 'base.html' %}
+{% load static %} 
+
 {% block title %}Atores{% endblock %}
 {% block content %}
 <h2>Lista de Atores</h2>
@@ -13,22 +15,13 @@
             <th>Nome</th>
             <th>Sobrenome</th>
             <th>Data de Estreia</th>
-            <th>Ações</th>
+             <th>Ações</th>
         </tr>
     </thead>
-    <tbody>
-        {% for ator in atores %}
-        <tr>
-            <td>{{ ator.id }}</td>
-            <td>{{ ator.nome }}</td>
-            <td>{{ ator.sobrenome }}</td>
-            <td>{{ ator.data_estreia }}</td>
-            <td>
-                <button class="edit">Editar</button>
-                <button class="delete">Excluir</button>
-            </td>
-        </tr>
-        {% endfor %}
+     <tbody>
     </tbody>
 </table>
+
+<script src="{% static 'api/js/atores.js' %}"></script>
+
 {% endblock %}

@@ -17,7 +17,36 @@ Including another URLconf
 from . import views
 from django.contrib import admin
 from django.urls import path
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from . import views
+# Importe a ViewSet da API
+from .views import AtorViewSet 
 
+# Cria um roteador para as Viewsets
+router = DefaultRouter()
+router.register(r'atores', AtorViewSet) # Rota: /api/atores/
+
+urlpatterns = [
+    # Rotas de Template
+    path('atores/', views.ator_list, name='atores'), 
+    path('', views.home, name='home'),
+    # ... outras rotas de template
+
+    # Rotas da API (usando o roteador)
+    path('api/', include(router.urls)),
+    path('cidades/', views.cidade_list, name='cidades'),
+    path('clientes/', views.cliente_list, name='clientes'),
+    path('estados/', views.estado_list, name='estados'),
+    path('midias/', views.midia_list, name='midias'),
+    path('locacoes/', views.locacao_list, name='locacoes'),
+    path('classificacoes_etarias/', views.classificacao_etaria_list, name='classificacoes_etarias'),
+    path('classificacoes_internas/', views.classificacao_interna_list, name='classificacoes_internas'),
+    path('exemplares/', views.exemplar_list, name='exemplares'),
+    path('generos/', views.genero_list, name='generos'),
+    path('tipos/', views.tipo_list, name='tipos')
+]
+'''
 urlpatterns = [
     path('', views.home, name='home'),
     path('atores/', views.ator_list, name='atores'),
@@ -32,3 +61,4 @@ urlpatterns = [
     path('generos/', views.genero_list, name='generos'),
     path('tipos/', views.tipo_list, name='tipos')
 ]
+'''
