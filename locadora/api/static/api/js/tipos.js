@@ -66,17 +66,15 @@ function abrirFormulario(id = null, descricao = "") {
     modal.classList.add("modal");
 
     modal.innerHTML = `
-        <div class="modal-content">
+        <div class="modal-content" onclick="event.stopPropagation()">
             <h3>${id ? "Editar Tipo" : "Adicionar Tipo"}</h3>
 
             <label>Descrição</label>
             <input type="text" id="descricao" value="${descricao}">
             
 
-            <button onclick="${id ? `salvarEdicao(${id})` : "criarTipo()"}">
-                Salvar
-            </button>
-            <button onclick="this.parentElement.parentElement.remove()">Cancelar</button>
+            <button class="modal-save" onclick="${id ? `salvarEdicao(${id})` : "criarTipo()"}">Salvar</button>
+            <button class="modal-cancel" onclick="fecharModal()">Cancelar</button>
         </div>
     `;
 

@@ -66,7 +66,7 @@ function abrirFormulario(codigo_interno = null, disponivel = "", midia = "") {
     modal.classList.add("modal");
 
     modal.innerHTML = `
-        <div class="modal-content">
+        <div class="modal-content" onclick="event.stopPropagation()">
             <h3>${codigo_interno ? "Editar Exemplar" : "Adicionar Exemplar"}</h3>
 
             <label>Disponível</label>
@@ -75,10 +75,8 @@ function abrirFormulario(codigo_interno = null, disponivel = "", midia = "") {
             <label>Mídia (ID)</label>
             <input type="number" id="midia" value="${midia}">
 
-            <button onclick="${codigo_interno ? `salvarEdicao(${codigo_interno})` : "criarExemplar()"}">
-                Salvar
-            </button>
-            <button onclick="fecharModal()">Cancelar</button>
+            <button class="modal-save" onclick="${codigo_interno ? `salvarEdicao(${codigo_interno})` : "criarExemplar()"}">Salvar</button>
+            <button class="modal-cancel" onclick="fecharModal()">Cancelar</button>
         </div>
     `;
 

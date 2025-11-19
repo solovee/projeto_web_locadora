@@ -70,24 +70,24 @@ function abrirFormulario(id = null, nome = "", sobrenome = "", data_estreia = ""
     modal.classList.add("modal");
 
     modal.innerHTML = `
-        <div class="modal-content">
+        <div class="modal-content" onclick="event.stopPropagation()">
             <h3>${id ? "Editar Ator" : "Adicionar Ator"}</h3>
 
             <label>Nome</label>
             <input type="text" id="nome" value="${nome}">
-            
+
             <label>Sobrenome</label>
             <input type="text" id="sobrenome" value="${sobrenome}">
-            
+
             <label>Data de Estreia</label>
             <input type="date" id="data_estreia" value="${data_estreia}">
 
-            <button onclick="${id ? `salvarEdicao(${id})` : "criarAtor()"}">
-                Salvar
-            </button>
-            <button onclick="this.parentElement.parentElement.remove()">Cancelar</button>
+            <button class="modal-save" onclick="${id ? `salvarEdicao(${id})` : "criarAtor()"}">Salvar</button>
+            <button class="modal-cancel" onclick="fecharModal()">Cancelar</button>
         </div>
     `;
+
+    
 
     document.body.appendChild(modal);
 }
@@ -152,7 +152,6 @@ async function deletarAtor(id) {
 }
 
 
-// =================== AUXILIAR ===================
 function fecharModal() {
     const modal = document.querySelector(".modal");
     if (modal) modal.remove();

@@ -67,7 +67,7 @@ function abrirFormulario(id = null, descricao = "", valor_aluguel = 0) {
     modal.classList.add("modal");
 
     modal.innerHTML = `
-        <div class="modal-content">
+        <div class="modal-content" onclick="event.stopPropagation()">
             <h3>${id ? "Editar Classificação Interna" : "Adicionar Classificação Interna"}</h3>
 
             <label>Descrição</label>
@@ -75,10 +75,8 @@ function abrirFormulario(id = null, descricao = "", valor_aluguel = 0) {
 
             <label>Valor Aluguel</label>
             <input type="number" id="valor_aluguel" value="${valor_aluguel}" step="0.01">
-            <button onclick="${id ? `salvarEdicao(${id})` : "criarClassificacao()"}">
-                Salvar
-            </button>
-            <button onclick="this.parentElement.parentElement.remove()">Cancelar</button>
+            <button class="modal-save" onclick="${id ? `salvarEdicao(${id})` : "criarClassificacao()"}">Salvar</button>
+            <button class="modal-cancel" onclick="fecharModal()">Cancelar</button>
         </div>
     `;
 

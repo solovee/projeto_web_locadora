@@ -97,7 +97,7 @@ function abrirFormulario(
     modal.classList.add("modal");
 
     modal.innerHTML = `
-        <div class="modal-content">
+        <div class="modal-content" onclick="event.stopPropagation()">
             <h3>${id ? "Editar Mídia" : "Adicionar Mídia"}</h3>
 
             <label>Título</label>
@@ -130,8 +130,8 @@ function abrirFormulario(
             <label>Classificação Interna ID</label>
             <input type="number" id="classificacao_interna" value="${classificacao_interna}">
 
-            <button onclick="${id ? `salvarEdicao(${id})` : "criarMidia()"}">Salvar</button>
-            <button onclick="fecharModal()">Cancelar</button>
+            <button class="modal-save" onclick="${id ? `salvarEdicao(${id})` : "criarMidia()"}">Salvar</button>
+            <button class="modal-cancel" onclick="fecharModal()">Cancelar</button>
         </div>
     `;
 

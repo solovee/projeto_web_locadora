@@ -67,7 +67,7 @@ function abrirFormulario(id = null, nome = "", sigla = "") {
     modal.classList.add("modal");
 
     modal.innerHTML = `
-        <div class="modal-content">
+        <div class="modal-content" onclick="event.stopPropagation()">
             <h3>${id ? "Editar Estado" : "Adicionar Estado"}</h3>
 
             <label>Nome</label>
@@ -76,10 +76,8 @@ function abrirFormulario(id = null, nome = "", sigla = "") {
             <label>Sigla</label>
             <input type="text" id="sigla" value="${sigla}">
 
-            <button onclick="${id ? `salvarEdicao(${id})` : "criarEstado()"}">
-                Salvar
-            </button>
-            <button onclick="this.parentElement.parentElement.remove()">Cancelar</button>
+            <button class="modal-save" onclick="${id ? `salvarEdicao(${id})` : "criarEstado()"}">Salvar</button>
+            <button class="modal-cancel" onclick="fecharModal()">Cancelar</button>
         </div>
     `;
 
