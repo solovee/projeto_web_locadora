@@ -19,9 +19,7 @@ const API_URL = "/api/locacoes/";
 
 document.addEventListener("DOMContentLoaded", () => {
     carregarLocacoes();
-    document.querySelector(".add").addEventListener("click", () => {
-        abrirFormulario();
-    });
+    document.querySelector(".add").addEventListener("click", () => abrirFormulario());
 });
 
 // =================== LISTAR ===================
@@ -85,8 +83,14 @@ function abrirFormulario(id = null, data_inicio = "", data_fim = "", cancelada =
             <label>Data de Fim</label>
             <input type="date" id="data_fim" value="${data_fim}">
 
-            <label>Cancelada</label>
-            <input type="checkbox" id="cancelada" ${cancelada == 1 ? "checked" : ""}>
+            ${
+                id
+                ? `
+                    <label>Cancelada</label>
+                    <input type="checkbox" id="cancelada" ${cancelada == 1 ? "checked" : ""}>
+                `
+                : ""
+            }
 
             <label>ID do Cliente</label>
             <input type="number" id="cliente" value="${cliente}">
@@ -102,10 +106,13 @@ function abrirFormulario(id = null, data_inicio = "", data_fim = "", cancelada =
 
 // =================== CRIAR ===================
 async function criarLocacao() {
+    const canceladaInput = document.getElementById("cancelada"); // pode não existir
+    const cancelada = canceladaInput ? (canceladaInput.checked ? 1 : 0) : 0;
+
     const data = {
         data_inicio: document.getElementById("data_inicio").value,
         data_fim: document.getElementById("data_fim").value,
-        cancelada: document.getElementById("cancelada").checked ? 1 : 0,
+        cancelada: cancelada,
         cliente: parseInt(document.getElementById("cliente").value)
     };
 

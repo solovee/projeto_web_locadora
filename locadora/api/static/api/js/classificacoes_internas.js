@@ -61,7 +61,6 @@ async function carregarClassificacoesInternas() {
 }
 
 
-// =================== FORMULÁRIO PARA CRIAR/EDITAR (Função Faltante) ===================
 function abrirFormulario(id = null, descricao = "", valor_aluguel = 0) {
     const modal = document.createElement("div");
     modal.classList.add("modal");
