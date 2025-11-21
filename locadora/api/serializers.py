@@ -65,4 +65,5 @@ class LocacaoSerializer(serializers.ModelSerializer):
 class ItemLocacaoSerializer(serializers.ModelSerializer):
     class Meta:
         model = ItemLocacao
-        fields = '__all__'
+        fields = ['locacao', 'exemplar_codigo_interno', 'valor']
+        read_only_fields = ['valor']  # usuário NÃO envia

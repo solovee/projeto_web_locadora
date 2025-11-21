@@ -15,11 +15,10 @@ function getCookie(name) {
 }
 
 const CSRF_TOKEN = getCookie('csrftoken');
-// A URL agora aponta para o endpoint de ItemLocacoes
-const API_URL = "/api/item_locacoes/"; 
+const API_URL = "/api/item_locacoes/";  // compatível com seu router
 
 document.addEventListener("DOMContentLoaded", () => {
-    carregarItemLocacoes(); // Chamada corrigida
+    carregarItemLocacoes();
     document.querySelector(".add").addEventListener("click", () => abrirFormulario());
 });
 
@@ -33,25 +32,21 @@ async function carregarItemLocacoes() {
         return;
     }
 
-    const item_locacoes = await response.json();
-
+    const itens = await response.json();
     const tbody = document.querySelector("tbody");
     tbody.innerHTML = "";
 
-    item_locacoes.forEach(item => { // Renomeado para 'item'
+    itens.forEach(item => {
         const tr = document.createElement("tr");
-        
-        // ⚠️ Nota: Como a PK é composta (locacao_id e exemplar_codigo_interno), 
-        // usaremos os dois IDs na função de edição/exclusão.
 
         tr.innerHTML = `
-            <td>${item.locacao}</td> <td>${item.exemplar_codigo_interno}</td> <td>${item.valor}</td> <td>
-                <button class="edit"
-                    onclick="abrirFormulario(
-                        ${item.locacao},
-                        ${item.exemplar_codigo_interno},
-                        ${item.valor}
-                    )">Editar</button>
+            <td>${item.locacao}</td>
+            <td>${item.exemplar_codigo_interno}</td>
+            <td>${item.valor}</td>
+            <td>
+                <button class="edit" onclick="abrirFormulario(${item.locacao}, ${item.exemplar_codigo_interno})">
+                    Editar
+                </button>
 
                 <button class="delete" onclick="deletarItemLocacao(${item.locacao}, ${item.exemplar_codigo_interno})">
                     Excluir
@@ -64,16 +59,11 @@ async function carregarItemLocacoes() {
 }
 
 // =================== FORMULÁRIO ===================
-// Os argumentos agora correspondem aos campos do ItemLocacao
-function abrirFormulario(locacao_id = null, exemplar_id = null, valor = "") {
+function abrirFormulario(locacao = null, exemplar = null) {
+    const isEditing = locacao !== null && exemplar !== null;
+
     const modal = document.createElement("div");
     modal.classList.add("modal");
-    
-    // Constrói a chave composta (se for edição)
-    const pk_composta = locacao_id && exemplar_id ? `${locacao_id}/${exemplar_id}` : null;
-    
-    // O formulário de ItemLocacao geralmente não edita a chave composta, mas sim o valor
-    const isEditing = pk_composta !== null;
 
     modal.innerHTML = `
         <div class="modal-content" onclick="event.stopPropagation()">
@@ -81,17 +71,21 @@ function abrirFormulario(locacao_id = null, exemplar_id = null, valor = "") {
             <h3>${isEditing ? "Editar Item Locação" : "Adicionar Item Locação"}</h3>
 
             <label>ID da Locação</label>
-            <input type="number" id="locacao_id" value="${locacao_id || ""}" ${isEditing ? 'disabled' : ''}>
+            <input type="number" id="locacao_id"
+                   value="${locacao || ""}"
+                   ${isEditing ? "disabled" : ""}>
 
             <label>ID do Exemplar</label>
-            <input type="number" id="exemplar_id" value="${exemplar_id || ""}" ${isEditing ? 'disabled' : ''}>
+            <input type="number" id="exemplar_id"
+                   value="${exemplar || ""}"
+                   ${isEditing ? "disabled" : ""}>
 
-            <label>Valor</label>
-            <input type="number" step="0.01" id="valor" value="${valor}">
-            
-            <button class="modal-save" onclick="${isEditing ? `salvarEdicaoItemLocacao(${locacao_id}, ${exemplar_id})` : "criarItemLocacao()"}">Salvar</button>
+            <button class="modal-save"
+                onclick="${isEditing ? `salvarEdicaoItemLocacao(${locacao}, ${exemplar})` : "criarItemLocacao()"}">
+                Salvar
+            </button>
+
             <button class="modal-cancel" onclick="fecharModal()">Cancelar</button>
-
         </div>
     `;
 
@@ -102,10 +96,10 @@ function abrirFormulario(locacao_id = null, exemplar_id = null, valor = "") {
 async function criarItemLocacao() {
     const data = {
         locacao: parseInt(document.getElementById("locacao_id").value),
-        exemplar_codigo_interno: parseInt(document.getElementById("exemplar_id").value),
-        valor: parseFloat(document.getElementById("valor").value)
+        exemplar_codigo_interno: parseInt(document.getElementById("exemplar_id").value)
+        // Valor não vai — backend calcula
     };
-    
+
     const response = await fetch(API_URL, {
         method: "POST",
         headers: {
@@ -114,10 +108,10 @@ async function criarItemLocacao() {
         },
         body: JSON.stringify(data)
     });
-    
+
     if (!response.ok) {
-        alert("Erro ao criar item de locação. Verifique os IDs e o valor.");
-        console.error("Erro:", await response.json());
+        alert("Erro ao criar item. Veja o console.");
+        console.error(await response.text());
         return;
     }
 
@@ -126,20 +120,15 @@ async function criarItemLocacao() {
 }
 
 // =================== EDITAR ===================
-// Agora requer os dois IDs da chave composta para a URL
-async function salvarEdicaoItemLocacao(locacao_id, exemplar_id) {
-    const data = {
-        // A Locacao e o Exemplar são a PK, não devem ser alterados.
-        // O DRF pode requerer que os IDs sejam enviados mesmo assim, dependendo da configuração.
-        locacao: locacao_id, 
-        exemplar_codigo_interno: exemplar_id,
-        valor: parseFloat(document.getElementById("valor").value)
-    };
-    
-    // ⚠️ CHAVE COMPOSTA: Assume que o ViewSet customizado aceita o formato URL: /api/item_locacoes/LOCACAO_ID/EXEMPLAR_ID/
-    const API_ITEM_URL = `${API_URL}${locacao_id}/${exemplar_id}/`; 
+async function salvarEdicaoItemLocacao(locacao, exemplar) {
 
-    const response = await fetch(API_ITEM_URL, {
+    const data = {
+        locacao: locacao,
+        exemplar_codigo_interno: exemplar
+        // valor não vai — backend recalcula
+    };
+
+    const response = await fetch(`${API_URL}${locacao}/${exemplar}/`, {
         method: "PUT",
         headers: {
             "Content-Type": "application/json",
@@ -147,10 +136,10 @@ async function salvarEdicaoItemLocacao(locacao_id, exemplar_id) {
         },
         body: JSON.stringify(data)
     });
-    
+
     if (!response.ok) {
-        alert("Erro ao editar item de locação. Verifique o console.");
-        console.error("Erro:", await response.json());
+        alert("Erro ao editar item.");
+        console.error(await response.text());
         return;
     }
 
@@ -159,20 +148,18 @@ async function salvarEdicaoItemLocacao(locacao_id, exemplar_id) {
 }
 
 // =================== DELETAR ===================
-// Agora requer os dois IDs da chave composta
-async function deletarItemLocacao(locacao_id, exemplar_id) {
-    if (!confirm(`Tem certeza que deseja excluir o Item (Locação ID: ${locacao_id}, Exemplar ID: ${exemplar_id})?`)) return;
+async function deletarItemLocacao(locacao, exemplar) {
+    if (!confirm(`Excluir item da locação ${locacao}, exemplar ${exemplar}?`))
+        return;
 
-    // ⚠️ CHAVE COMPOSTA: Assume que o ViewSet customizado aceita o formato URL: /api/item_locacoes/LOCACAO_ID/EXEMPLAR_ID/
-    const API_ITEM_URL = `${API_URL}${locacao_id}/${exemplar_id}/`; 
-    
-    const response = await fetch(API_ITEM_URL, {
+    const response = await fetch(`${API_URL}${locacao}/${exemplar}/`, {
         method: "DELETE",
         headers: { "X-CSRFToken": CSRF_TOKEN }
     });
-    
+
     if (!response.ok) {
-        alert("Erro ao excluir item de locação.");
+        alert("Erro ao excluir item.");
+        console.error(await response.text());
         return;
     }
 

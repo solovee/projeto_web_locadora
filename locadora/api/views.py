@@ -67,8 +67,20 @@ class LocacaoViewSet(viewsets.ModelViewSet):
 
 class ItemLocacaoViewSet(viewsets.ModelViewSet):
     queryset = ItemLocacao.objects.all()
-    # Você precisará criar um serializer para ItemLocacao similar ao AtorSerializer
     serializer_class = ItemLocacaoSerializer
+
+    def perform_create(self, serializer):
+        exemplar = Exemplar.objects.get(
+            codigo_interno=self.request.data["exemplar_codigo_interno"]
+        )
+
+        midia = exemplar.midia  # FK direta
+        classificacao = midia.classificacao_interna  # FK direta
+        
+        valor = classificacao.valor_aluguel
+        
+        serializer.save(valor=valor)
+
 # ... mantenha suas outras views
 
 def ator_list(request):
