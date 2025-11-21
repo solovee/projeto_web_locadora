@@ -21,7 +21,7 @@ from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from . import views
 # Importe a ViewSet da API
-from .views import AtorViewSet, CidadeViewSet, ClassificacaoEtariaViewSet, ClassificacaoInternaViewSet, ClienteViewSet, EstadoViewSet, TipoViewSet, GeneroViewSet, ExemplarViewSet, MidiaViewSet, LocacaoViewSet
+from .views import AtorViewSet, CidadeViewSet, ClassificacaoEtariaViewSet, ClassificacaoInternaViewSet, ClienteViewSet, EstadoViewSet, TipoViewSet, GeneroViewSet, ExemplarViewSet, MidiaViewSet, LocacaoViewSet, ItemLocacaoViewSet
 
 # Cria um roteador para as Viewsets
 router = DefaultRouter()
@@ -36,6 +36,7 @@ router.register(r'generos', GeneroViewSet) # Rota: /api/generos/
 router.register(r'exemplares', ExemplarViewSet) # Rota: /api/exemplares/
 router.register(r'midias', MidiaViewSet) # Rota: /api/midias/
 router.register(r'locacoes', LocacaoViewSet) # Rota: /api/locacoes/
+router.register(r'item_locacoes', ItemLocacaoViewSet) # Rota: /api/item_locacoes/
 
 urlpatterns = [
     # Rotas de Template
@@ -54,7 +55,9 @@ urlpatterns = [
     path('classificacoes_internas/', views.classificacao_interna_list, name='classificacoes_internas'),
     path('exemplares/', views.exemplar_list, name='exemplares'),
     path('generos/', views.genero_list, name='generos'),
-    path('tipos/', views.tipo_list, name='tipos')
+    path('tipos/', views.tipo_list, name='tipos'),
+    path("item_locacoes/", views.item_locacao_list, name="item_locacoes"),
+
 ]
 '''
 urlpatterns = [

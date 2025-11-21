@@ -1,7 +1,7 @@
 # SeuApp/serializers.py
 
 from rest_framework import serializers
-from .models import Ator, Cidade, ClassificacaoEtaria, ClassificacaoInterna, Cliente, Estado, Exemplar, Genero, Locacao, Midia, Tipo
+from .models import Ator, Cidade, ClassificacaoEtaria, ClassificacaoInterna, Cliente, Estado, Exemplar, Genero, Locacao, Midia, Tipo, ItemLocacao
 
 class AtorSerializer(serializers.ModelSerializer):
     # Formata a data de estreia para o formato YYYY-MM-DD para compatibilidade com o input type="date"
@@ -60,4 +60,9 @@ class MidiaSerializer(serializers.ModelSerializer):
 class LocacaoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Locacao
+        fields = '__all__'
+
+class ItemLocacaoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ItemLocacao
         fields = '__all__'
