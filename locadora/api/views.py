@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 
 # Create your views here.
 from django.shortcuts import render
@@ -66,6 +66,38 @@ class LocacaoViewSet(viewsets.ModelViewSet):
     serializer_class = LocacaoSerializer
 
 class ItemLocacaoViewSet(viewsets.ModelViewSet):
+    serializer_class = ItemLocacaoSerializer
+    queryset = ItemLocacao.objects.all()
+    lookup_field = None  # ignorar lookup padrão
+
+    def get_object(self):
+        locacao = self.kwargs.get("locacao")
+        exemplar = self.kwargs.get("exemplar")
+
+        return get_object_or_404(
+            ItemLocacao,
+            locacao_id=locacao,
+            exemplar_codigo_interno=exemplar
+        )
+
+    def perform_create(self, serializer):
+        exemplar = Exemplar.objects.get(
+            codigo_interno=self.request.data["exemplar_codigo_interno"]
+        )
+
+        midia = exemplar.midia
+        classificacao = midia.classificacao_interna
+        valor = classificacao.valor_aluguel
+
+        serializer.save(valor=valor)
+# api/views.py
+
+from rest_framework import generics
+from django.shortcuts import get_object_or_404
+from .models import ItemLocacao, Exemplar
+from .serializers import ItemLocacaoSerializer
+
+class ItemLocacaoListCreateAPIView(generics.ListCreateAPIView):
     queryset = ItemLocacao.objects.all()
     serializer_class = ItemLocacaoSerializer
 
@@ -74,65 +106,66 @@ class ItemLocacaoViewSet(viewsets.ModelViewSet):
             codigo_interno=self.request.data["exemplar_codigo_interno"]
         )
 
-        midia = exemplar.midia  # FK direta
-        classificacao = midia.classificacao_interna  # FK direta
-        
+        midia = exemplar.midia
+        classificacao = midia.classificacao_interna
         valor = classificacao.valor_aluguel
-        
+
         serializer.save(valor=valor)
+
+
+class ItemLocacaoDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = ItemLocacaoSerializer
+
+    def get_object(self):
+        locacao = self.kwargs.get("locacao")
+        exemplar = self.kwargs.get("exemplar")
+
+        return get_object_or_404(
+            ItemLocacao,
+            locacao_id=locacao,
+            exemplar_codigo_interno=exemplar
+        )
+
 
 # ... mantenha suas outras views
 
 def ator_list(request):
     # Não precisa mais de Ator.objects.all()
-    return render(request, 'ator.html', {}) # Não passe mais o contexto 'atores'
+    return render(request, 'ator.html') # Não passe mais o contexto 'atores'
 
 def cliente_list(request):
-    clientes = Cliente.objects.all()
     return render(request, 'cliente.html')  
 def midia_list(request):
-    midias = Midia.objects.all()
     return render(request, 'midia.html')
 
 def locacao_list(request):
-    locacoes = Locacao.objects.all()
     return render(request, 'locacao.html')
 
 def classificacao_etaria_list(request):
-    classificacoes = ClassificacaoEtaria.objects.all()
     return render(request, 'classificacao_etaria.html')
 def classificacao_interna_list(request):
-    classificacoes_internas = ClassificacaoInterna.objects.all()
     return render(request, 'classificacao_interna.html')
 
 def estado_list(request):
-    estados = Estado.objects.all()
     return render(request, 'estado.html')
 
 def cidade_list(request):
-    cidades = Cidade.objects.all()
     return render(request, 'cidade.html')
 def exemplar_list(request):
-    exemplares = Exemplar.objects.all()
     return render(request, 'exemplar.html')
 
 def genero_list(request):
-    generos = Genero.objects.all()
     return render(request, 'genero.html')
 def locacoes_list(request):
-    locacoes = Locacao.objects.all()
     return render(request, 'locacoes.html')
 
 def tipo_list(request):
-    tipos = Tipo.objects.all()
     return render(request, 'tipo.html')
 
 def midia_list(request):
-    midias = Midia.objects.all()
     return render(request, 'midia.html')
 
 def item_locacao_list(request):
-    item_locacoes = ItemLocacao.objects.all()
     return render(request, 'item_locacao.html')
 
 def home(request):
