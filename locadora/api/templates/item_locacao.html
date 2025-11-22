@@ -1,19 +1,23 @@
 {% extends 'base.html' %}
 {% load static %} 
 
-{% block title %}Item-Locações{% endblock %}
+{% block title %}Gerenciar Locações{% endblock %}
 {% block content %}
-<h2>Lista de Item-Locações</h2>
+<h2>Lista de Locações (com Itens)</h2>
 
-<button class="add">Adicionar Item-Locação</button>
+<button class="add">Registrar Nova Locação</button>
 <br><br>
 
 <table>
     <thead>
         <tr>
             <th>Locação ID</th>
-            <th>Exemplar Código Interno</th>
-            <th>Valor</th>
+            <th>Data de Início</th>
+            <th>Data de Fim</th>
+            <th>Cancelada</th>
+            <th>Cliente ID</th>
+            <th>Exemplares</th>
+            <th>Valor Total</th>
             <th>Ações</th>
         </tr>
     </thead>
@@ -24,4 +28,3 @@
 <script src="{% static 'api/js/item_locacoes.js' %}"></script>
 
 {% endblock %}
-

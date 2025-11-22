@@ -2,6 +2,7 @@
 
 from rest_framework import serializers
 from .models import Ator, Cidade, ClassificacaoEtaria, ClassificacaoInterna, Cliente, Estado, Exemplar, Genero, Locacao, Midia, Tipo, ItemLocacao
+from django.db.models import Sum
 
 class AtorSerializer(serializers.ModelSerializer):
     # Formata a data de estreia para o formato YYYY-MM-DD para compatibilidade com o input type="date"
@@ -67,3 +68,39 @@ class ItemLocacaoSerializer(serializers.ModelSerializer):
         model = ItemLocacao
         fields = ['locacao', 'exemplar_codigo_interno', 'valor']
         read_only_fields = ['valor']  # usuário NÃO envia
+
+# SeuApp/serializers.py
+
+# ... (mantenha os serializers existentes, como LocacaoSerializer, ItemLocacaoSerializer, etc.)
+
+class LocacaoFullSerializer(serializers.ModelSerializer):
+    # Campo para receber a lista de IDs de exemplares na criação
+    exemplares_ids = serializers.ListField(
+        child=serializers.IntegerField(),
+        write_only=True, 
+        required=True
+    )
+    
+    # Campo para listar os exemplares associados na saída (GET)
+    exemplares_list = serializers.SerializerMethodField()
+    
+    # Campo para o valor total (calculado na saída)
+    valor_total = serializers.DecimalField(max_digits=15, decimal_places=2, read_only=True)
+
+    class Meta:
+        model = Locacao
+        fields = ['id', 'data_inicio', 'data_fim', 'cancelada', 'cliente', 'exemplares_ids', 'exemplares_list', 'valor_total']
+        read_only_fields = ['id', 'valor_total', 'exemplares_list'] 
+    
+    def get_exemplares_list(self, obj):
+        # ... (Função para formatar a lista de IDs dos exemplares)
+        itens = ItemLocacao.objects.filter(locacao=obj)
+        exemplares_codigos = [item.exemplar_codigo_interno.codigo_interno for item in itens]
+        return ", ".join(map(str, exemplares_codigos))
+
+    def to_representation(self, instance):
+        # ... (Função para calcular o valor total na saída)
+        representation = super().to_representation(instance)
+        total = ItemLocacao.objects.filter(locacao=instance).aggregate(Sum('valor'))['valor__sum']
+        representation['valor_total'] = total if total is not None else 0.00
+        return representation
