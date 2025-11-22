@@ -55,7 +55,7 @@ async function carregarLocacoes() {
             <td>R$ ${valorFormatado}</td>
             <td>
                 <button class="edit" onclick="abrirFormulario(${locacao.id}, ${locacao.cancelada})">
-                    Editar (Cancelar)
+                    Cancelar
                 </button>
             </td>
         `;
