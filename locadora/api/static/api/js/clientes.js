@@ -133,7 +133,7 @@ async function criarCliente() {
         cidade: parseInt(document.getElementById("cidade").value),
     };
 
-    await fetch(API_URL, {
+    const response = await fetch(API_URL, {
         method: "POST",
         headers: { 
             "Content-Type": "application/json",
@@ -141,6 +141,11 @@ async function criarCliente() {
         },
         body: JSON.stringify(data)
     });
+    if (!response.ok) {
+        alert("Erro ao criar cliente");
+        console.error(await response.text());
+        return;
+    }
 
     fecharModal();
     carregarClientes();
@@ -162,7 +167,7 @@ async function salvarEdicao(id) {
         cidade: parseInt(document.getElementById("cidade").value),
     };
 
-    await fetch(`${API_URL}${id}/`, {
+    const response = await fetch(`${API_URL}${id}/`, {
         method: "PUT",
         headers: { 
             "Content-Type": "application/json",
@@ -170,7 +175,11 @@ async function salvarEdicao(id) {
         },
         body: JSON.stringify(data)
     });
-
+    if (!response.ok) {
+        alert("Erro ao editar cliente");
+        console.error(await response.text());
+        return;
+    }
     fecharModal();
     carregarClientes();
 }
@@ -180,13 +189,17 @@ async function salvarEdicao(id) {
 async function deletarCliente(id) {
     if (!confirm("Tem certeza que deseja excluir este cliente?")) return;
 
-    await fetch(`${API_URL}${id}/`, {
+    const response = await fetch(`${API_URL}${id}/`, {
         method: "DELETE",
         headers: { 
             "X-CSRFToken": CSRF_TOKEN 
         }
     });
-
+    if (!response.ok) {
+        alert("Erro ao excluir cliente");
+        console.error(await response.text());
+        return;
+    }
     carregarClientes();
 }
 

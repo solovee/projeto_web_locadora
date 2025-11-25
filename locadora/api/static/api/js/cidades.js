@@ -92,7 +92,7 @@ async function criarCidade() {
         estado: document.getElementById("estado").value,
     };
 
-    await fetch(API_URL, {
+    const response = await fetch(API_URL, {
         method: "POST",
         headers: { 
             "Content-Type": "application/json",
@@ -100,7 +100,11 @@ async function criarCidade() {
         },
         body: JSON.stringify(data)
     });
-
+    if (!response.ok) {
+        alert("Erro ao criar cidade");
+        console.error(await response.text());
+        return;
+    }
     fecharModal();
     carregarCidades();
 }
@@ -113,7 +117,7 @@ async function salvarEdicao(id) {
         estado: document.getElementById("estado").value,
     };
 
-    await fetch(`${API_URL}${id}/`, {
+    const response = await fetch(`${API_URL}${id}/`, {
         method: "PUT",
         headers: { 
             "Content-Type": "application/json",
@@ -121,7 +125,11 @@ async function salvarEdicao(id) {
         },
         body: JSON.stringify(data)
     });
-
+    if (!response.ok) {
+        alert("Erro ao editar cidade");
+        console.error(await response.text());
+        return;
+    }
     fecharModal();
     carregarCidades();
 }
@@ -131,12 +139,17 @@ async function salvarEdicao(id) {
 async function deletarCidade(id) {
     if (!confirm("Tem certeza que deseja excluir esta cidade?")) return;
 
-    await fetch(`${API_URL}${id}/`, {
+    const response = await fetch(`${API_URL}${id}/`, {
         method: "DELETE",
         headers: { 
             "X-CSRFToken": CSRF_TOKEN 
         }
     });
+    if (!response.ok) {
+        alert("Erro ao excluir cidade");
+        console.error(await response.text());
+        return;
+    }
 
     carregarCidades();
 }

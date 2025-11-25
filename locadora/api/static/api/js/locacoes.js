@@ -116,7 +116,7 @@ async function criarLocacao() {
         cliente: parseInt(document.getElementById("cliente").value)
     };
 
-    await fetch(API_URL, {
+    const response = await fetch(API_URL, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -124,7 +124,11 @@ async function criarLocacao() {
         },
         body: JSON.stringify(data)
     });
-
+    if (!response.ok) {
+        alert("Erro ao criar locação");
+        console.error(await response.text());
+        return;
+    }
     fecharModal();
     carregarLocacoes();
 }
@@ -138,7 +142,7 @@ async function salvarEdicao(id) {
         cliente: parseInt(document.getElementById("cliente").value)
     };
 
-    await fetch(`${API_URL}${id}/`, {
+    const response = await fetch(`${API_URL}${id}/`, {
         method: "PUT",
         headers: {
             "Content-Type": "application/json",
@@ -146,7 +150,11 @@ async function salvarEdicao(id) {
         },
         body: JSON.stringify(data)
     });
-
+    if (!response.ok) {
+        alert("Erro ao editar locação");
+        console.error(await response.text());
+        return;
+    }
     fecharModal();
     carregarLocacoes();
 }
@@ -155,10 +163,16 @@ async function salvarEdicao(id) {
 async function deletarLocacao(id) {
     if (!confirm("Tem certeza que deseja excluir esta locação?")) return;
 
-    await fetch(`${API_URL}${id}/`, {
+    const response = await fetch(`${API_URL}${id}/`, {
         method: "DELETE",
         headers: { "X-CSRFToken": CSRF_TOKEN }
     });
+
+    if (!response.ok) {
+        alert("Erro ao excluir locação");
+        console.error(await response.text());
+        return;
+    }
 
     carregarLocacoes();
 }

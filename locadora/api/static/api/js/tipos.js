@@ -88,7 +88,7 @@ async function criarTipo() {
         descricao: document.getElementById("descricao").value,
     };
 
-    await fetch(API_URL, {
+    const response = await fetch(API_URL, {
         method: "POST",
         headers: { 
             "Content-Type": "application/json",
@@ -96,7 +96,11 @@ async function criarTipo() {
         },
         body: JSON.stringify(data)
     });
-
+    if (!response.ok) {
+        alert("Erro ao criar tipo");
+        console.error(await response.text());
+        return;
+    }
     fecharModal();
     carregarTipos();
 }
@@ -108,7 +112,7 @@ async function salvarEdicao(id) {
         descricao: document.getElementById("descricao").value,
     };
 
-    await fetch(`${API_URL}${id}/`, {
+    const response = await fetch(`${API_URL}${id}/`, {
         method: "PUT",
         headers: { 
             "Content-Type": "application/json",
@@ -116,7 +120,11 @@ async function salvarEdicao(id) {
         },
         body: JSON.stringify(data)
     });
-
+    if (!response.ok) {
+        alert("Erro ao editar tipo");
+        console.error(await response.text());
+        return;
+    }
     fecharModal();
     carregarTipos();
 }
@@ -126,13 +134,17 @@ async function salvarEdicao(id) {
 async function deletarTipo(id) {
     if (!confirm("Tem certeza que deseja excluir este tipo?")) return;
 
-    await fetch(`${API_URL}${id}/`, {
+    const response = await fetch(`${API_URL}${id}/`, {
         method: "DELETE",
         headers: { 
             "X-CSRFToken": CSRF_TOKEN 
         }
     });
-
+    if (!response.ok) {
+        alert("Erro ao excluir tipo");
+        console.error(await response.text());
+        return;
+    }
     carregarTipos();
 }
 

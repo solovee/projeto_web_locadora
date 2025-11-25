@@ -92,7 +92,7 @@ async function criarEstado() {
         sigla: document.getElementById("sigla").value,
     };
 
-    await fetch(API_URL, {
+    const resposta = await fetch(API_URL, {
         method: "POST",
         headers: { 
             "Content-Type": "application/json",
@@ -100,6 +100,11 @@ async function criarEstado() {
         },
         body: JSON.stringify(data)
     });
+    if (!resposta.ok) {
+        alert("Erro ao criar estado");
+        console.error(await resposta.text());
+        return;
+    }
 
     fecharModal();
     carregarEstados();
@@ -113,7 +118,7 @@ async function salvarEdicao(id) {
         sigla: document.getElementById("sigla").value,
     };
 
-    await fetch(`${API_URL}${id}/`, {
+    const resposta = await fetch(`${API_URL}${id}/`, {
         method: "PUT",
         headers: { 
             "Content-Type": "application/json",
@@ -121,6 +126,11 @@ async function salvarEdicao(id) {
         },
         body: JSON.stringify(data)
     });
+    if (!resposta.ok) {
+        alert("Erro ao editar estado");
+        console.error(await resposta.text());
+        return;
+    }
 
     fecharModal();
     carregarEstados();
@@ -131,13 +141,17 @@ async function salvarEdicao(id) {
 async function deletarEstado(id) {
     if (!confirm("Tem certeza que deseja excluir este estado?")) return;
 
-    await fetch(`${API_URL}${id}/`, {
+    const resposta = await fetch(`${API_URL}${id}/`, {
         method: "DELETE",
         headers: { 
             "X-CSRFToken": CSRF_TOKEN 
         }
     });
-
+    if (!resposta.ok) {
+        alert("Erro ao excluir estado");
+        console.error(await resposta.text());
+        return;
+    }
     carregarEstados();
 }
 

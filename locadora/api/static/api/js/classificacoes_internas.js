@@ -95,7 +95,7 @@ async function criarClassificacao() {
         valor_aluguel: parseFloat(document.getElementById("valor_aluguel").value),
     };
 
-    await fetch(API_URL, {
+    const resposta = await fetch(API_URL, {
         method: "POST",
         headers: { 
             "Content-Type": "application/json",
@@ -103,6 +103,11 @@ async function criarClassificacao() {
         },
         body: JSON.stringify(data)
     });
+    if (!resposta.ok) {
+        alert("Erro ao criar classificação interna");
+        console.error(await resposta.text());
+        return;
+    }
 
     fecharModal();
     carregarClassificacoesInternas();
@@ -116,7 +121,7 @@ async function salvarEdicao(id) {
         valor_aluguel: parseFloat(document.getElementById("valor_aluguel").value),
     };
 
-    await fetch(`${API_URL}${id}/`, {
+    const resposta = await fetch(`${API_URL}${id}/`, {
         method: "PUT",
         headers: { 
             "Content-Type": "application/json",
@@ -124,7 +129,11 @@ async function salvarEdicao(id) {
         },
         body: JSON.stringify(data)
     });
-
+    if (!resposta.ok) {
+        alert("Erro ao editar classificação interna");
+        console.error(await resposta.text());
+        return;
+    }
     fecharModal();
     carregarClassificacoesInternas();
 }
@@ -134,13 +143,17 @@ async function salvarEdicao(id) {
 async function deletarClassificacao(id) {
     if (!confirm("Tem certeza que deseja excluir esta classificação interna?")) return;
 
-    await fetch(`${API_URL}${id}/`, {
+    const resposta = await fetch(`${API_URL}${id}/`, {
         method: "DELETE",
         headers: { 
             "X-CSRFToken": CSRF_TOKEN 
         }
     });
-
+    if (!resposta.ok) {
+        alert("Erro ao excluir classificação interna");
+        console.error(await resposta.text());
+        return;
+    }
     carregarClassificacoesInternas();
 }
 

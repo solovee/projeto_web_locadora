@@ -88,7 +88,7 @@ async function criarClassificacao() {
         descricao: document.getElementById("descricao").value,
     };
 
-    await fetch(API_URL, {
+    const response = await fetch(API_URL, {
         method: "POST",
         headers: { 
             "Content-Type": "application/json",
@@ -96,6 +96,11 @@ async function criarClassificacao() {
         },
         body: JSON.stringify(data)
     });
+    if (!response.ok) {
+        alert("Erro ao criar classificação etária");
+        console.error(await response.text());
+        return;
+    }
 
     fecharModal();
     carregarClassificacoesEtarias();
@@ -108,7 +113,7 @@ async function salvarEdicao(id) {
         descricao: document.getElementById("descricao").value,
     };
 
-    await fetch(`${API_URL}${id}/`, {
+    const response = await fetch(`${API_URL}${id}/`, {
         method: "PUT",
         headers: { 
             "Content-Type": "application/json",
@@ -116,6 +121,11 @@ async function salvarEdicao(id) {
         },
         body: JSON.stringify(data)
     });
+    if (!response.ok) {
+        alert("Erro ao editar classificação etária");
+        console.error(await response.text());
+        return;
+    }
 
     fecharModal();
     carregarClassificacoesEtarias();
@@ -126,12 +136,17 @@ async function salvarEdicao(id) {
 async function deletarClassificacao(id) {
     if (!confirm("Tem certeza que deseja excluir esta classificação etária?")) return;
 
-    await fetch(`${API_URL}${id}/`, {
+    const response = await fetch(`${API_URL}${id}/`, {
         method: "DELETE",
         headers: { 
             "X-CSRFToken": CSRF_TOKEN 
         }
     });
+    if (!response.ok) {
+        alert("Erro ao excluir classificação etária");
+        console.error(await response.text());
+        return;
+    }
 
     carregarClassificacoesEtarias();
 }
