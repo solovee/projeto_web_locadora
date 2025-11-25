@@ -69,14 +69,8 @@ header nav a:hover {
     text-decoration: underline;
 }
 
-/* SeuApp/static/api/css/style.css */
 
-/* Estilos para o Ícone no Cabeçalho */
-/* SeuApp/static/api/css/style.css */
-
-/* Estilos para o Ícone no Cabeçalho */
 .header-icon {
-    /* Define o tamanho da imagem */
     width: 32px; 
     height: 32px;
     
@@ -90,7 +84,6 @@ header nav a:hover {
 
 }
 
-/* ===== Modal moderno ===== */
 
 .modal {
     position: fixed;
@@ -116,9 +109,8 @@ header nav a:hover {
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
     animation: scaleIn 0.25s ease;
 
-    /* 🔥 Correções importantes */
-    max-height: 90vh;     /* impede de ultrapassar a tela */
-    overflow-y: auto;     /* ativa scroll interno */
+    max-height: 90vh;     
+    overflow-y: auto;     
 }
 
 .modal-content h3 {

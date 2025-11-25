@@ -1,4 +1,3 @@
-// Função auxiliar para obter o CSRF token dos cookies do Django
 function getCookie(name) {
     let cookieValue = null;
     if (document.cookie && document.cookie !== '') {
@@ -25,13 +24,10 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
-// =================== LISTAR ===================
 async function carregarClientes() {
     const response = await fetch(API_URL);
-    // Verificação de erro para o caso de o servidor ainda retornar HTML (500)
     if (!response.ok) {
         console.error("Erro ao carregar clientes:", response.statusText);
-        // Tente ler o corpo como texto para ver o erro (se for HTML)
         const errorText = await response.text();
         console.error("Resposta do servidor:", errorText);
         alert("Erro ao carregar dados. Verifique o console do servidor (Django).");
@@ -70,7 +66,6 @@ async function carregarClientes() {
 }
 
 
-// =================== FORMULÁRIO PARA CRIAR/EDITAR (Função Faltante) ===================
 function abrirFormulario(id = null, nome = "", sobrenome = "", data_nascimento = "", cpf = "", email = "", logradouro = "", numero = 0, bairro = "", cep = "", cidade   = 0) {
     const modal = document.createElement("div");
     modal.classList.add("modal");
@@ -118,7 +113,6 @@ function abrirFormulario(id = null, nome = "", sobrenome = "", data_nascimento =
 }
 
 
-// =================== CRIAR ===================
 async function criarCliente() {
     const data = {
         nome: document.getElementById("nome").value,
@@ -152,7 +146,6 @@ async function criarCliente() {
 }
 
 
-// =================== EDITAR ===================
 async function salvarEdicao(id) {
     const data = {
         nome: document.getElementById("nome").value,
@@ -185,7 +178,6 @@ async function salvarEdicao(id) {
 }
 
 
-// =================== DELETAR ===================
 async function deletarCliente(id) {
     if (!confirm("Tem certeza que deseja excluir este cliente?")) return;
 
@@ -204,7 +196,6 @@ async function deletarCliente(id) {
 }
 
 
-// =================== AUXILIAR ===================
 function fecharModal() {
     const modal = document.querySelector(".modal");
     if (modal) modal.remove();

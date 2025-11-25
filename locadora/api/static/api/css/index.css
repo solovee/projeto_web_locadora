@@ -1,12 +1,10 @@
-/* Estilos customizados inspirados no tema dark/cinza-azulado */
     :root {
         --header-bg: #0a1623;
         --primary-card-bg: #0a1623;
-        --accent-color: #f39c12; /* Um amarelo-laranja vibrante como destaque */
+        --accent-color: #f39c12; 
         --light-bg: #f5f7fa;
     }
 
-    /* Usando a fonte Inter para uma aparência limpa */
     body {
         font-family: "Inter", sans-serif;
         background-color: var(--light-bg);
@@ -14,7 +12,6 @@
         padding: 0;
     }
 
-    /* Estilizando o cabeçalho com o tema escuro principal */
     .main-header {
         background-color: var(--header-bg);
         color: white;
@@ -23,30 +20,27 @@
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
     }
 
-    /* Animação e estilo para os cartões de navegação */
     .nav-card {
-        /* Transições suaves para animação */
         transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s ease;
         cursor: pointer;
         border: 1px solid rgba(255, 255, 255, 0.1);
         background-color: var(--primary-card-bg);
-        text-decoration: none; /* Garantir que o link não tenha sublinhado */
-        display: flex; /* Para garantir que o link ocupe todo o espaço do card */
+        text-decoration: none; 
+        display: flex; 
         align-items: center;
         justify-content: center;
     }
 
     .nav-card:hover {
-        /* Efeito de levitar e sombreamento mais intenso com a cor de destaque */
         transform: translateY(-5px) scale(1.03);
         box-shadow: 0 12px 25px rgba(0, 0, 0, 0.4), 0 0 15px var(--accent-color);
-        background-color: #3b536b; /* Levemente mais claro no hover */
+        background-color: #3b536b; 
     }
 
     .nav-card-text {
         transition: color 0.3s ease;
     }
     .nav-card:hover .nav-card-text {
-            color: var(--accent-color); /* Texto fica amarelo/laranja no hover */
+            color: var(--accent-color); 
     }
 

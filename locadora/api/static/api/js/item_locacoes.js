@@ -1,6 +1,3 @@
-// SeuApp/static/api/js/locacoes_full.js
-
-// =================== CSRF & Setup ===================
 function getCookie(name) {
     let cookieValue = null;
     if (document.cookie && document.cookie !== '') {
@@ -17,14 +14,13 @@ function getCookie(name) {
 }
 
 const CSRF_TOKEN = getCookie('csrftoken');
-const API_URL = "/api/locacoes_full/"; // URL da nova API
+const API_URL = "/api/locacoes_full/"; 
 
 document.addEventListener("DOMContentLoaded", () => {
     carregarLocacoes();
     document.querySelector(".add").addEventListener("click", () => abrirFormulario());
 });
 
-// =================== LISTAR ===================
 async function carregarLocacoes() {
     const response = await fetch(API_URL);
 
@@ -41,7 +37,6 @@ async function carregarLocacoes() {
     locacoes.forEach(locacao => {
         const tr = document.createElement("tr");
         
-        // Formata o valor e o status de cancelada
         const valorFormatado = parseFloat(locacao.valor_total).toFixed(2).replace('.', ',');
         const statusCancelada = locacao.cancelada == 1 ? "Sim (1)" : "Não (0)";
 
@@ -63,18 +58,15 @@ async function carregarLocacoes() {
     });
 }
 
-// =================== FORMULÁRIO (Criação e Edição de Cancelamento) ===================
 function abrirFormulario(locacao_id = null, cancelada = null) {
     const isEditing = locacao_id !== null;
 
     const modal = document.createElement("div");
     modal.classList.add("modal");
 
-    // Conteúdo do Modal:
     let formContent;
 
     if (isEditing) {
-        // Modo Edição: Apenas campo 'Cancelada'
         formContent = `
             <h3>Editar Locação #${locacao_id} (Apenas Cancelamento)</h3>
 
@@ -87,7 +79,6 @@ function abrirFormulario(locacao_id = null, cancelada = null) {
             </button>
         `;
     } else {
-        // Modo Criação: Data Início/Fim, Cliente, Exemplares (lista de IDs)
         formContent = `
             <h3>Registrar Nova Locação</h3>
 
@@ -118,15 +109,9 @@ function abrirFormulario(locacao_id = null, cancelada = null) {
     document.body.appendChild(modal);
 }
 
-// SeuApp/static/api/js/locacoes_full.js
-
-// ... (Funções getCookie, CSRF_TOKEN, API_URL e carregarLocacoes)
-
-// ... (Função abrirFormulario no modo de Criação)
 
 async function criarLocacao() {
     const exemplares_str = document.getElementById("exemplares_ids").value;
-    // Transforma "1, 5, 12" em [1, 5, 12]
     const exemplares_ids = exemplares_str.split(',').map(id => parseInt(id.trim())).filter(id => !isNaN(id));
 
     const data = {
@@ -134,7 +119,6 @@ async function criarLocacao() {
         data_fim: document.getElementById("data_fim").value,
         cliente: parseInt(document.getElementById("cliente_id").value),
         cancelada: 0, 
-        // CAMPO CHAVE: Envia a lista de IDs para o Serializer
         exemplares_ids: exemplares_ids 
     };
     console.log(data);
@@ -146,11 +130,9 @@ async function criarLocacao() {
         },
         body: JSON.stringify(data)
     });
-
-    // ... (Tratamento de erro e sucesso)
-
     if (!response.ok) {
-        // ... (Alerta de erro)
+        alert("Erro ao criar locação");
+        console.error(await response.text());
         return;
     }
 
@@ -158,9 +140,6 @@ async function criarLocacao() {
     carregarLocacoes();
 }
 
-// ... (Funções salvarEdicaoLocacao e fecharModal)
-
-// =================== EDITAR LOCAÇÃO (APENAS CANCELADA) ===================
 async function salvarEdicaoLocacao(locacao_id) {
     const nova_cancelada = parseInt(document.getElementById("cancelada").value);
 
@@ -174,7 +153,7 @@ async function salvarEdicaoLocacao(locacao_id) {
     };
 
     const response = await fetch(`${API_URL}${locacao_id}/`, {
-        method: "PATCH", // Usamos PATCH para enviar apenas o campo 'cancelada'
+        method: "PATCH", 
         headers: {
             "Content-Type": "application/json",
             "X-CSRFToken": CSRF_TOKEN
@@ -198,7 +177,6 @@ async function salvarEdicaoLocacao(locacao_id) {
     carregarLocacoes();
 }
 
-// =================== AUXILIAR ===================
 function fecharModal() {
     const modal = document.querySelector(".modal");
     if (modal) modal.remove();

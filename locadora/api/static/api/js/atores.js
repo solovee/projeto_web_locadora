@@ -1,4 +1,3 @@
-// Função auxiliar para obter o CSRF token dos cookies do Django
 function getCookie(name) {
     let cookieValue = null;
     if (document.cookie && document.cookie !== '') {
@@ -26,13 +25,10 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
-// =================== LISTAR ===================
 async function carregarAtores() {
     const response = await fetch(API_URL);
-    // Verificação de erro para o caso de o servidor ainda retornar HTML (500)
     if (!response.ok) {
         console.error("Erro ao carregar atores:", response.statusText);
-        // Tente ler o corpo como texto para ver o erro (se for HTML)
         const errorText = await response.text();
         console.error("Resposta do servidor:", errorText);
         alert("Erro ao carregar dados. Verifique o console do servidor (Django).");
@@ -64,7 +60,6 @@ async function carregarAtores() {
 }
 
 
-// =================== FORMULÁRIO PARA CRIAR/EDITAR (Função Faltante) ===================
 function abrirFormulario(id = null, nome = "", sobrenome = "", data_estreia = "") {
     const modal = document.createElement("div");
     modal.classList.add("modal");
@@ -93,7 +88,6 @@ function abrirFormulario(id = null, nome = "", sobrenome = "", data_estreia = ""
 }
 
 
-// =================== CRIAR ===================
 async function criarAtor() {
     const data = {
         nome: document.getElementById("nome").value,
@@ -119,7 +113,6 @@ async function criarAtor() {
 }
 
 
-// =================== EDITAR ===================
 async function salvarEdicao(id) {
     const data = {
         nome: document.getElementById("nome").value,
@@ -145,7 +138,6 @@ async function salvarEdicao(id) {
 }
 
 
-// =================== DELETAR ===================
 async function deletarAtor(id) {
     if (!confirm("Tem certeza que deseja excluir este ator?")) return;
 

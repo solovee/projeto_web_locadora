@@ -1,4 +1,3 @@
-// =================== CSRF ===================
 function getCookie(name) {
     let cookieValue = null;
     if (document.cookie && document.cookie !== '') {
@@ -22,7 +21,6 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelector(".add").addEventListener("click", () => abrirFormulario());
 });
 
-// =================== LISTAR ===================
 async function carregarLocacoes() {
     const response = await fetch(API_URL);
 
@@ -67,7 +65,6 @@ async function carregarLocacoes() {
     });
 }
 
-// =================== FORMULÁRIO ===================
 function abrirFormulario(id = null, data_inicio = "", data_fim = "", cancelada = 0, cliente = "") {
     const modal = document.createElement("div");
     modal.classList.add("modal");
@@ -104,9 +101,8 @@ function abrirFormulario(id = null, data_inicio = "", data_fim = "", cancelada =
     document.body.appendChild(modal);
 }
 
-// =================== CRIAR ===================
 async function criarLocacao() {
-    const canceladaInput = document.getElementById("cancelada"); // pode não existir
+    const canceladaInput = document.getElementById("cancelada"); 
     const cancelada = canceladaInput ? (canceladaInput.checked ? 1 : 0) : 0;
 
     const data = {
@@ -133,7 +129,6 @@ async function criarLocacao() {
     carregarLocacoes();
 }
 
-// =================== EDITAR ===================
 async function salvarEdicao(id) {
     const data = {
         data_inicio: document.getElementById("data_inicio").value,
@@ -159,7 +154,6 @@ async function salvarEdicao(id) {
     carregarLocacoes();
 }
 
-// =================== DELETAR ===================
 async function deletarLocacao(id) {
     if (!confirm("Tem certeza que deseja excluir esta locação?")) return;
 
@@ -177,7 +171,6 @@ async function deletarLocacao(id) {
     carregarLocacoes();
 }
 
-// =================== AUXILIAR ===================
 function fecharModal() {
     const modal = document.querySelector(".modal");
     if (modal) modal.remove();

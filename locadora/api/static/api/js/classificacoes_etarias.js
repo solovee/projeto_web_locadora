@@ -1,4 +1,3 @@
-// Função auxiliar para obter o CSRF token dos cookies do Django
 function getCookie(name) {
     let cookieValue = null;
     if (document.cookie && document.cookie !== '') {
@@ -25,13 +24,10 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
-// =================== LISTAR ===================
 async function carregarClassificacoesEtarias() {
     const response = await fetch(API_URL);
-    // Verificação de erro para o caso de o servidor ainda retornar HTML (500)
     if (!response.ok) {
         console.error("Erro ao carregar classificações etárias:", response.statusText);
-        // Tente ler o corpo como texto para ver o erro (se for HTML)
         const errorText = await response.text();
         console.error("Resposta do servidor:", errorText);
         alert("Erro ao carregar dados. Verifique o console do servidor (Django).");
@@ -60,7 +56,6 @@ async function carregarClassificacoesEtarias() {
 }
 
 
-// =================== FORMULÁRIO PARA CRIAR/EDITAR (Função Faltante) ===================
 function abrirFormulario(id = null, descricao = "") {
     const modal = document.createElement("div");
     modal.classList.add("modal");
@@ -82,7 +77,6 @@ function abrirFormulario(id = null, descricao = "") {
 }
 
 
-// =================== CRIAR ===================
 async function criarClassificacao() {
     const data = {
         descricao: document.getElementById("descricao").value,
@@ -107,7 +101,6 @@ async function criarClassificacao() {
 }
 
 
-// =================== EDITAR ===================
 async function salvarEdicao(id) {
     const data = {
         descricao: document.getElementById("descricao").value,
@@ -132,7 +125,6 @@ async function salvarEdicao(id) {
 }
 
 
-// =================== DELETAR ===================
 async function deletarClassificacao(id) {
     if (!confirm("Tem certeza que deseja excluir esta classificação etária?")) return;
 
@@ -152,7 +144,6 @@ async function deletarClassificacao(id) {
 }
 
 
-// =================== AUXILIAR ===================
 function fecharModal() {
     const modal = document.querySelector(".modal");
     if (modal) modal.remove();

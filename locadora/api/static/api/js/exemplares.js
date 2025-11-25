@@ -1,4 +1,3 @@
-// Função auxiliar para obter o CSRF token dos cookies do Django
 function getCookie(name) {
     let cookieValue = null;
     if (document.cookie && document.cookie !== '') {
@@ -25,7 +24,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
-// =================== LISTAR ===================
 async function carregarExemplares() {
     const response = await fetch(API_URL);
 
@@ -60,7 +58,6 @@ async function carregarExemplares() {
     });
 }
 
-// =================== FORMULÁRIO ===================
 function abrirFormulario(codigo_interno = null, disponivel = "", midia = "") {
     const modal = document.createElement("div");
     modal.classList.add("modal");
@@ -83,7 +80,6 @@ function abrirFormulario(codigo_interno = null, disponivel = "", midia = "") {
     document.body.appendChild(modal);
 }
 
-// =================== CRIAR ===================
 async function criarExemplar() {
     const data = {
         disponivel: Number(document.getElementById("disponivel").value),
@@ -109,7 +105,6 @@ async function criarExemplar() {
     carregarExemplares();
 }
 
-// =================== EDITAR ===================
 async function salvarEdicao(codigo_interno) {
     const data = {
         disponivel: Number(document.getElementById("disponivel").value),
@@ -135,7 +130,6 @@ async function salvarEdicao(codigo_interno) {
     carregarExemplares();
 }
 
-// =================== DELETAR ===================
 async function deletarExemplar(id) {
     if (!confirm("Tem certeza que deseja excluir este exemplar?")) return;
 
@@ -153,7 +147,6 @@ async function deletarExemplar(id) {
     carregarExemplares();
 }
 
-// =================== FECHAR MODAL ===================
 function fecharModal() {
     const modal = document.querySelector(".modal");
     if (modal) modal.remove();

@@ -1,4 +1,3 @@
-// Função auxiliar para obter o CSRF token dos cookies do Django
 function getCookie(name) {
     let cookieValue = null;
     if (document.cookie && document.cookie !== '') {
@@ -25,13 +24,10 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
-// =================== LISTAR ===================
 async function carregarGeneros() {
     const response = await fetch(API_URL);
-    // Verificação de erro para o caso de o servidor ainda retornar HTML (500)
     if (!response.ok) {
         console.error("Erro ao carregar generos:", response.statusText);
-        // Tente ler o corpo como texto para ver o erro (se for HTML)
         const errorText = await response.text();
         console.error("Resposta do servidor:", errorText);
         alert("Erro ao carregar dados. Verifique o console do servidor (Django).");
@@ -60,7 +56,6 @@ async function carregarGeneros() {
 }
 
 
-// =================== FORMULÁRIO PARA CRIAR/EDITAR (Função Faltante) ===================
 function abrirFormulario(id = null, descricao = "") {
     const modal = document.createElement("div");
     modal.classList.add("modal");
@@ -82,7 +77,6 @@ function abrirFormulario(id = null, descricao = "") {
 }
 
 
-// =================== CRIAR ===================
 async function criarGenero() {
     const data = {
         descricao: document.getElementById("descricao").value,
@@ -106,7 +100,6 @@ async function criarGenero() {
 }
 
 
-// =================== EDITAR ===================
 async function salvarEdicao(id) {
     const data = {
         descricao: document.getElementById("descricao").value,
@@ -130,7 +123,6 @@ async function salvarEdicao(id) {
 }
 
 
-// =================== DELETAR ===================
 async function deletarGenero(id) {
     if (!confirm("Tem certeza que deseja excluir este gênero?")) return;
 
@@ -149,7 +141,6 @@ async function deletarGenero(id) {
 }
 
 
-// =================== AUXILIAR ===================
 function fecharModal() {
     const modal = document.querySelector(".modal");
     if (modal) modal.remove();

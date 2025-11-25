@@ -1,4 +1,3 @@
-// =================== CSRF ===================
 function getCookie(name) {
     let cookieValue = null;
     if (document.cookie && document.cookie !== '') {
@@ -22,7 +21,6 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelector(".add").addEventListener("click", () => abrirFormulario());
 });
 
-// =================== LISTAR ===================
 async function carregarMidias() {
     const response = await fetch(API_URL);
 
@@ -79,7 +77,6 @@ async function carregarMidias() {
 }
 
 
-// =================== FORMULÁRIO ===================
 function abrirFormulario(
     id = null,
     titulo = "",
@@ -139,7 +136,6 @@ function abrirFormulario(
 }
 
 
-// =================== CRIAR ===================
 async function criarMidia() {
     const data = coletarDadosFormulario();
 
@@ -163,7 +159,6 @@ async function criarMidia() {
 }
 
 
-// =================== EDITAR ===================
 async function salvarEdicao(id) {
     const data = coletarDadosFormulario();
 
@@ -187,7 +182,6 @@ async function salvarEdicao(id) {
 }
 
 
-// =================== DELETAR ===================
 async function deletarMidia(id) {
     if (!confirm("Deseja excluir esta mídia?")) return;
 
@@ -206,7 +200,6 @@ async function deletarMidia(id) {
 }
 
 
-// =================== AUXILIAR ===================
 function coletarDadosFormulario() {
     return {
         titulo: document.getElementById("titulo").value,
