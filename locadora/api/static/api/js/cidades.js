@@ -30,7 +30,13 @@ async function carregarCidades() {
         console.error("Erro ao carregar cidades:", response.statusText);
         const errorText = await response.text();
         console.error("Resposta do servidor:", errorText);
-        alert("Erro ao carregar dados. Verifique o console do servidor (Django).");
+        Swal.fire({
+            icon: "error",
+            title: "Erro!",
+            text: "Erro ao carregar cidades",
+            timer: 2000,
+            showConfirmButton: false
+         });
         return; 
     }
     
@@ -95,7 +101,13 @@ async function criarCidade() {
         body: JSON.stringify(data)
     });
     if (!response.ok) {
-        alert("Erro ao criar cidade");
+        Swal.fire({
+            icon: "error",
+            title: "Erro!",
+            text: "Erro ao criar cidade",
+            timer: 2000,
+            showConfirmButton: false
+         });
         console.error(await response.text());
         return;
     }
@@ -119,7 +131,13 @@ async function salvarEdicao(id) {
         body: JSON.stringify(data)
     });
     if (!response.ok) {
-        alert("Erro ao editar cidade");
+        Swal.fire({
+            icon: "error",
+            title: "Erro!",
+            text: "Erro ao editar cidade",
+            timer: 2000,
+            showConfirmButton: false
+         });
         console.error(await response.text());
         return;
     }
@@ -129,7 +147,18 @@ async function salvarEdicao(id) {
 
 
 async function deletarCidade(id) {
-    if (!confirm("Tem certeza que deseja excluir esta cidade?")) return;
+    const confirmacao = await Swal.fire({
+        title: "Tem certeza?",
+        text: "Deseja realmente excluir esta cidade?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Sim, excluir",
+        cancelButtonText: "Cancelar",
+        confirmButtonColor: "#d33",
+        cancelButtonColor: "#3085d6"
+    });
+
+    if (!confirmacao.isConfirmed) return;
 
     const response = await fetch(`${API_URL}${id}/`, {
         method: "DELETE",
@@ -138,7 +167,13 @@ async function deletarCidade(id) {
         }
     });
     if (!response.ok) {
-        alert("Erro ao excluir cidade");
+        Swal.fire({
+            icon: "error",
+            title: "Erro!",
+            text: "Erro ao deletar cidade",
+            timer: 2000,
+            showConfirmButton: false
+         });
         console.error(await response.text());
         return;
     }

@@ -26,7 +26,13 @@ async function carregarMidias() {
 
     if (!response.ok) {
         console.error(await response.text());
-        alert("Erro ao carregar mídias.");
+        Swal.fire({
+            icon: "error",
+            title: "Erro!",
+            text: "Erro ao carregar mídias",
+            timer: 2000,
+            showConfirmButton: false
+         });
         return;
     }
 
@@ -149,7 +155,13 @@ async function criarMidia() {
     });
 
     if (!response.ok) {
-        alert("Erro ao criar mídia");
+        Swal.fire({
+            icon: "error",
+            title: "Erro!",
+            text: "Erro ao criar mídia",
+            timer: 2000,
+            showConfirmButton: false
+         });
         console.error(await response.text());
         return;
     }
@@ -172,7 +184,13 @@ async function salvarEdicao(id) {
     });
 
     if (!response.ok) {
-        alert("Erro ao editar mídia");
+        Swal.fire({
+            icon: "error",
+            title: "Erro!",
+            text: "Erro ao editar mídia",
+            timer: 2000,
+            showConfirmButton: false
+         });
         console.error(await response.text());
         return;
     }
@@ -183,7 +201,18 @@ async function salvarEdicao(id) {
 
 
 async function deletarMidia(id) {
-    if (!confirm("Deseja excluir esta mídia?")) return;
+    const confirmacao = await Swal.fire({
+        title: "Tem certeza?",
+        text: "Deseja realmente excluir esta mídia?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Sim, excluir",
+        cancelButtonText: "Cancelar",
+        confirmButtonColor: "#d33",
+        cancelButtonColor: "#3085d6"
+    });
+
+    if (!confirmacao.isConfirmed) return;
 
     const response = await fetch(`${API_URL}${id}/`, {
         method: "DELETE",
@@ -191,7 +220,13 @@ async function deletarMidia(id) {
     });
 
     if (!response.ok) {
-        alert("Erro ao excluir mídia");
+        Swal.fire({
+            icon: "error",
+            title: "Erro!",
+            text: "Erro ao deletar mídia",
+            timer: 2000,
+            showConfirmButton: false
+         });
         console.error(await response.text());
         return;
     }

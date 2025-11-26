@@ -30,7 +30,13 @@ async function carregarGeneros() {
         console.error("Erro ao carregar generos:", response.statusText);
         const errorText = await response.text();
         console.error("Resposta do servidor:", errorText);
-        alert("Erro ao carregar dados. Verifique o console do servidor (Django).");
+        Swal.fire({
+            icon: "error",
+            title: "Erro!",
+            text: "Erro ao carregar gêneros",
+            timer: 2000,
+            showConfirmButton: false
+         });
         return; 
     }
     
@@ -91,7 +97,13 @@ async function criarGenero() {
         body: JSON.stringify(data)
     });
     if (!response.ok) {
-        alert("Erro ao criar gênero");
+        Swal.fire({
+            icon: "error",
+            title: "Erro!",
+            text: "Erro ao criar gênero",
+            timer: 2000,
+            showConfirmButton: false
+         });
         console.error(await response.text());
         return;
     }
@@ -114,7 +126,13 @@ async function salvarEdicao(id) {
         body: JSON.stringify(data)
     });
     if (!response.ok) {
-        alert("Erro ao editar gênero");
+        Swal.fire({
+            icon: "error",
+            title: "Erro!",
+            text: "Erro ao editar gênero",
+            timer: 2000,
+            showConfirmButton: false
+         });
         console.error(await response.text());
         return;
     }
@@ -124,7 +142,18 @@ async function salvarEdicao(id) {
 
 
 async function deletarGenero(id) {
-    if (!confirm("Tem certeza que deseja excluir este gênero?")) return;
+    const confirmacao = await Swal.fire({
+        title: "Tem certeza?",
+        text: "Deseja realmente excluir este gênero?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Sim, excluir",
+        cancelButtonText: "Cancelar",
+        confirmButtonColor: "#d33",
+        cancelButtonColor: "#3085d6"
+    });
+
+    if (!confirmacao.isConfirmed) return;
 
     const response = await fetch(`${API_URL}${id}/`, {
         method: "DELETE",
@@ -133,7 +162,13 @@ async function deletarGenero(id) {
         }
     });
     if (!response.ok) {
-        alert("Erro ao excluir gênero");
+        Swal.fire({
+            icon: "error",
+            title: "Erro!",
+            text: "Erro ao deletar gênero",
+            timer: 2000,
+            showConfirmButton: false
+         });
         console.error(await response.text());
         return;
     }

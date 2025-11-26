@@ -31,7 +31,13 @@ async function carregarAtores() {
         console.error("Erro ao carregar atores:", response.statusText);
         const errorText = await response.text();
         console.error("Resposta do servidor:", errorText);
-        alert("Erro ao carregar dados. Verifique o console do servidor (Django).");
+       Swal.fire({
+            icon: "error",
+            title: "Erro!",
+            text: "Erro ao carregar atores",
+            timer: 2000,
+            showConfirmButton: false
+         });
         return; 
     }
     
@@ -104,7 +110,13 @@ async function criarAtor() {
         body: JSON.stringify(data)
     });
     if (!response.ok) {
-        alert("Erro ao criar ator");
+        Swal.fire({
+            icon: "error",
+            title: "Erro!",
+            text: "Erro ao criar ator",
+            timer: 2000,
+            showConfirmButton: false
+         });
         console.error(await response.text());
         return;
     }
@@ -129,7 +141,13 @@ async function salvarEdicao(id) {
         body: JSON.stringify(data)
     });
     if (!response.ok) {
-        alert("Erro ao editar ator");
+        Swal.fire({
+            icon: "error",
+            title: "Erro!",
+            text: "Erro ao editar ator",
+            timer: 2000,
+            showConfirmButton: false
+         });
         console.error(await response.text());
         return;
     }
@@ -139,7 +157,18 @@ async function salvarEdicao(id) {
 
 
 async function deletarAtor(id) {
-    if (!confirm("Tem certeza que deseja excluir este ator?")) return;
+    const confirmacao = await Swal.fire({
+        title: "Tem certeza?",
+        text: "Deseja realmente excluir este ator?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Sim, excluir",
+        cancelButtonText: "Cancelar",
+        confirmButtonColor: "#d33",
+        cancelButtonColor: "#3085d6"
+    });
+
+    if (!confirmacao.isConfirmed) return;
 
     const response = await fetch(`${API_URL}${id}/`, {
         method: "DELETE",
@@ -148,7 +177,13 @@ async function deletarAtor(id) {
         }
     });
     if (!response.ok) {
-        alert("Erro ao excluir ator");
+        Swal.fire({
+            icon: "error",
+            title: "Erro!",
+            text: "Erro ao deletar ator",
+            timer: 2000,
+            showConfirmButton: false
+         });
         console.error(await response.text());
         return;
     }

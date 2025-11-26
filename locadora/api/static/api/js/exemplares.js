@@ -31,7 +31,13 @@ async function carregarExemplares() {
         console.error("Erro ao carregar exemplares:", response.statusText);
         const errorText = await response.text();
         console.error("Resposta do servidor:", errorText);
-        alert("Erro ao carregar dados. Verifique o console do Django.");
+        Swal.fire({
+            icon: "error",
+            title: "Erro!",
+            text: "Erro ao carregar exemplares",
+            timer: 2000,
+            showConfirmButton: false
+         });
         return;
     }
 
@@ -96,7 +102,13 @@ async function criarExemplar() {
     });
 
     if (!response.ok) {
-        alert("Erro ao criar exemplar");
+        Swal.fire({
+            icon: "error",
+            title: "Erro!",
+            text: "Erro ao criar exemplar",
+            timer: 2000,
+            showConfirmButton: false
+         });
         console.error(await response.text());
         return;
     }
@@ -121,7 +133,13 @@ async function salvarEdicao(codigo_interno) {
     });
 
     if (!response.ok) {
-        alert("Erro ao editar exemplar");
+        Swal.fire({
+            icon: "error",
+            title: "Erro!",
+            text: "Erro ao editar exemplar",
+            timer: 2000,
+            showConfirmButton: false
+         });
         console.error(await response.text());
         return;
     }
@@ -131,7 +149,18 @@ async function salvarEdicao(codigo_interno) {
 }
 
 async function deletarExemplar(id) {
-    if (!confirm("Tem certeza que deseja excluir este exemplar?")) return;
+    const confirmacao = await Swal.fire({
+        title: "Tem certeza?",
+        text: "Deseja realmente excluir este exemplar?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Sim, excluir",
+        cancelButtonText: "Cancelar",
+        confirmButtonColor: "#d33",
+        cancelButtonColor: "#3085d6"
+    });
+
+    if (!confirmacao.isConfirmed) return;
 
     const response = await fetch(`${API_URL}${id}/`, {
         method: "DELETE",
@@ -139,7 +168,13 @@ async function deletarExemplar(id) {
     });
 
     if (!response.ok) {
-        alert("Erro ao excluir exemplar");
+        Swal.fire({
+            icon: "error",
+            title: "Erro!",
+            text: "Erro ao deletar exemplar",
+            timer: 2000,
+            showConfirmButton: false
+         });
         console.error(await response.text());
         return;
     }

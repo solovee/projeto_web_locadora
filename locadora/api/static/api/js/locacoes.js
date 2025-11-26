@@ -26,7 +26,13 @@ async function carregarLocacoes() {
 
     if (!response.ok) {
         console.error(await response.text());
-        alert("Erro ao carregar locações.");
+        Swal.fire({
+            icon: "error",
+            title: "Erro!",
+            text: "Erro ao carregar locações",
+            timer: 2000,
+            showConfirmButton: false
+         });
         return;
     }
 
@@ -121,7 +127,13 @@ async function criarLocacao() {
         body: JSON.stringify(data)
     });
     if (!response.ok) {
-        alert("Erro ao criar locação");
+        Swal.fire({
+            icon: "error",
+            title: "Erro!",
+            text: "Erro ao criar locação",
+            timer: 2000,
+            showConfirmButton: false
+         });
         console.error(await response.text());
         return;
     }
@@ -146,7 +158,13 @@ async function salvarEdicao(id) {
         body: JSON.stringify(data)
     });
     if (!response.ok) {
-        alert("Erro ao editar locação");
+        Swal.fire({
+            icon: "error",
+            title: "Erro!",
+            text: "Erro ao editar locação",
+            timer: 2000,
+            showConfirmButton: false
+         });
         console.error(await response.text());
         return;
     }
@@ -155,7 +173,18 @@ async function salvarEdicao(id) {
 }
 
 async function deletarLocacao(id) {
-    if (!confirm("Tem certeza que deseja excluir esta locação?")) return;
+    const confirmacao = await Swal.fire({
+        title: "Tem certeza?",
+        text: "Deseja realmente excluir esta locação?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Sim, excluir",
+        cancelButtonText: "Cancelar",
+        confirmButtonColor: "#d33",
+        cancelButtonColor: "#3085d6"
+    });
+
+    if (!confirmacao.isConfirmed) return;
 
     const response = await fetch(`${API_URL}${id}/`, {
         method: "DELETE",
@@ -163,7 +192,13 @@ async function deletarLocacao(id) {
     });
 
     if (!response.ok) {
-        alert("Erro ao excluir locação");
+        Swal.fire({
+            icon: "error",
+            title: "Erro!",
+            text: "Erro ao deletar locação",
+            timer: 2000,
+            showConfirmButton: false
+         });
         console.error(await response.text());
         return;
     }

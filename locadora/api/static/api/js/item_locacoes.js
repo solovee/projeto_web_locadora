@@ -26,7 +26,13 @@ async function carregarLocacoes() {
 
     if (!response.ok) {
         console.error(await response.text());
-        alert("Erro ao carregar locações.");
+        Swal.fire({
+            icon: "error",
+            title: "Erro!",
+            text: "Erro ao carregar locações",
+            timer: 2000,
+            showConfirmButton: false
+         });
         return;
     }
 
@@ -131,7 +137,13 @@ async function criarLocacao() {
         body: JSON.stringify(data)
     });
     if (!response.ok) {
-        alert("Erro ao criar locação");
+        Swal.fire({
+            icon: "error",
+            title: "Erro!",
+            text: "Erro ao criar locação",
+            timer: 2000,
+            showConfirmButton: false
+         });
         console.error(await response.text());
         return;
     }
@@ -166,9 +178,21 @@ async function salvarEdicaoLocacao(locacao_id) {
         console.error(errorText);
         try {
             const errorJson = JSON.parse(errorText);
-            alert("Erro ao editar locação: " + JSON.stringify(errorJson));
+            Swal.fire({
+            icon: "error",
+            title: "Erro!",
+            text: "Erro ao editar locação",
+            timer: 2000,
+            showConfirmButton: false
+         });
         } catch {
-            alert("Erro ao editar locação. Veja o console.");
+            Swal.fire({
+            icon: "error",
+            title: "Erro!",
+            text: "Erro ao editar locação",
+            timer: 2000,
+            showConfirmButton: false
+         });
         }
         return;
     }

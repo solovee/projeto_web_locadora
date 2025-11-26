@@ -30,7 +30,13 @@ async function carregarClassificacoesInternas() {
         console.error("Erro ao carregar classificações internas:", response.statusText);
         const errorText = await response.text();
         console.error("Resposta do servidor:", errorText);
-        alert("Erro ao carregar dados. Verifique o console do servidor (Django).");
+        Swal.fire({
+            icon: "error",
+            title: "Erro!",
+            text: "Erro ao carregar classificações internas",
+            timer: 2000,
+            showConfirmButton: false
+         });
         return; 
     }
     
@@ -99,7 +105,13 @@ async function criarClassificacao() {
         body: JSON.stringify(data)
     });
     if (!resposta.ok) {
-        alert("Erro ao criar classificação interna");
+        Swal.fire({
+            icon: "error",
+            title: "Erro!",
+            text: "Erro ao criar classificação interna",
+            timer: 2000,
+            showConfirmButton: false
+         });
         console.error(await resposta.text());
         return;
     }
@@ -124,7 +136,13 @@ async function salvarEdicao(id) {
         body: JSON.stringify(data)
     });
     if (!resposta.ok) {
-        alert("Erro ao editar classificação interna");
+        Swal.fire({
+            icon: "error",
+            title: "Erro!",
+            text: "Erro ao editar classificação interna",
+            timer: 2000,
+            showConfirmButton: false
+         });
         console.error(await resposta.text());
         return;
     }
@@ -134,7 +152,18 @@ async function salvarEdicao(id) {
 
 
 async function deletarClassificacao(id) {
-    if (!confirm("Tem certeza que deseja excluir esta classificação interna?")) return;
+    const confirmacao = await Swal.fire({
+        title: "Tem certeza?",
+        text: "Deseja realmente excluir esta classificação interna?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Sim, excluir",
+        cancelButtonText: "Cancelar",
+        confirmButtonColor: "#d33",
+        cancelButtonColor: "#3085d6"
+    });
+
+    if (!confirmacao.isConfirmed) return;
 
     const resposta = await fetch(`${API_URL}${id}/`, {
         method: "DELETE",
@@ -143,7 +172,13 @@ async function deletarClassificacao(id) {
         }
     });
     if (!resposta.ok) {
-        alert("Erro ao excluir classificação interna");
+        Swal.fire({
+            icon: "error",
+            title: "Erro!",
+            text: "Erro ao deletar classificação interna",
+            timer: 2000,
+            showConfirmButton: false
+         });
         console.error(await resposta.text());
         return;
     }

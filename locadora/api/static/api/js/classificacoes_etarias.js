@@ -30,7 +30,13 @@ async function carregarClassificacoesEtarias() {
         console.error("Erro ao carregar classificações etárias:", response.statusText);
         const errorText = await response.text();
         console.error("Resposta do servidor:", errorText);
-        alert("Erro ao carregar dados. Verifique o console do servidor (Django).");
+        Swal.fire({
+            icon: "error",
+            title: "Erro!",
+            text: "Erro ao carregar classificações etárias",
+            timer: 2000,
+            showConfirmButton: false
+         });
         return; 
     }
     
@@ -91,7 +97,13 @@ async function criarClassificacao() {
         body: JSON.stringify(data)
     });
     if (!response.ok) {
-        alert("Erro ao criar classificação etária");
+        Swal.fire({
+            icon: "error",
+            title: "Erro!",
+            text: "Erro ao criar classificação etária",
+            timer: 2000,
+            showConfirmButton: false
+         });
         console.error(await response.text());
         return;
     }
@@ -115,7 +127,13 @@ async function salvarEdicao(id) {
         body: JSON.stringify(data)
     });
     if (!response.ok) {
-        alert("Erro ao editar classificação etária");
+        Swal.fire({
+            icon: "error",
+            title: "Erro!",
+            text: "Erro ao editar classificação etária",
+            timer: 2000,
+            showConfirmButton: false
+         });
         console.error(await response.text());
         return;
     }
@@ -126,7 +144,18 @@ async function salvarEdicao(id) {
 
 
 async function deletarClassificacao(id) {
-    if (!confirm("Tem certeza que deseja excluir esta classificação etária?")) return;
+    const confirmacao = await Swal.fire({
+        title: "Tem certeza?",
+        text: "Deseja realmente excluir esta classificação etária?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Sim, excluir",
+        cancelButtonText: "Cancelar",
+        confirmButtonColor: "#d33",
+        cancelButtonColor: "#3085d6"
+    });
+
+    if (!confirmacao.isConfirmed) return;
 
     const response = await fetch(`${API_URL}${id}/`, {
         method: "DELETE",
@@ -135,7 +164,13 @@ async function deletarClassificacao(id) {
         }
     });
     if (!response.ok) {
-        alert("Erro ao excluir classificação etária");
+        Swal.fire({
+            icon: "error",
+            title: "Erro!",
+            text: "Erro ao deletar classificação etária",
+            timer: 2000,
+            showConfirmButton: false
+         });
         console.error(await response.text());
         return;
     }

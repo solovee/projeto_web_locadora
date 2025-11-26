@@ -30,7 +30,13 @@ async function carregarTipos() {
         console.error("Erro ao carregar tipos:", response.statusText);
         const errorText = await response.text();
         console.error("Resposta do servidor:", errorText);
-        alert("Erro ao carregar dados. Verifique o console do servidor (Django).");
+        Swal.fire({
+            icon: "error",
+            title: "Erro!",
+            text: "Erro ao carregar tipos",
+            timer: 2000,
+            showConfirmButton: false
+         });
         return; 
     }
     
@@ -91,7 +97,13 @@ async function criarTipo() {
         body: JSON.stringify(data)
     });
     if (!response.ok) {
-        alert("Erro ao criar tipo");
+        Swal.fire({
+            icon: "error",
+            title: "Erro!",
+            text: "Erro ao criar tipo",
+            timer: 2000,
+            showConfirmButton: false
+         });
         console.error(await response.text());
         return;
     }
@@ -114,7 +126,13 @@ async function salvarEdicao(id) {
         body: JSON.stringify(data)
     });
     if (!response.ok) {
-        alert("Erro ao editar tipo");
+        Swal.fire({
+            icon: "error",
+            title: "Erro!",
+            text: "Erro ao editar tipo",
+            timer: 2000,
+            showConfirmButton: false
+         });
         console.error(await response.text());
         return;
     }
@@ -124,7 +142,18 @@ async function salvarEdicao(id) {
 
 
 async function deletarTipo(id) {
-    if (!confirm("Tem certeza que deseja excluir este tipo?")) return;
+    const confirmacao = await Swal.fire({
+        title: "Tem certeza?",
+        text: "Deseja realmente excluir este tipo?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Sim, excluir",
+        cancelButtonText: "Cancelar",
+        confirmButtonColor: "#d33",
+        cancelButtonColor: "#3085d6"
+    });
+
+    if (!confirmacao.isConfirmed) return;
 
     const response = await fetch(`${API_URL}${id}/`, {
         method: "DELETE",
@@ -133,7 +162,13 @@ async function deletarTipo(id) {
         }
     });
     if (!response.ok) {
-        alert("Erro ao excluir tipo");
+        Swal.fire({
+            icon: "error",
+            title: "Erro!",
+            text: "Erro ao deletar tipo",
+            timer: 2000,
+            showConfirmButton: false
+         });
         console.error(await response.text());
         return;
     }

@@ -30,7 +30,13 @@ async function carregarEstados() {
         console.error("Erro ao carregar estados:", response.statusText);
         const errorText = await response.text();
         console.error("Resposta do servidor:", errorText);
-        alert("Erro ao carregar dados. Verifique o console do servidor (Django).");
+        Swal.fire({
+                icon: "error",
+                title: "Erro!",
+                text: "Erro ao carregar estados",
+                timer: 2000,
+                showConfirmButton: false
+            });
         return; 
     }
     
@@ -95,7 +101,13 @@ async function criarEstado() {
         body: JSON.stringify(data)
     });
     if (!resposta.ok) {
-        alert("Erro ao criar estado");
+        Swal.fire({
+            icon: "error",
+            title: "Erro!",
+            text: "Erro ao criar estado",
+            timer: 2000,
+            showConfirmButton: false
+         });
         console.error(await resposta.text());
         return;
     }
@@ -120,7 +132,13 @@ async function salvarEdicao(id) {
         body: JSON.stringify(data)
     });
     if (!resposta.ok) {
-        alert("Erro ao editar estado");
+        Swal.fire({
+            icon: "error",
+            title: "Erro!",
+            text: "Erro ao editar estado",
+            timer: 2000,
+            showConfirmButton: false
+         });
         console.error(await resposta.text());
         return;
     }
@@ -131,7 +149,18 @@ async function salvarEdicao(id) {
 
 
 async function deletarEstado(id) {
-    if (!confirm("Tem certeza que deseja excluir este estado?")) return;
+    const confirmacao = await Swal.fire({
+        title: "Tem certeza?",
+        text: "Deseja realmente excluir este estado?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Sim, excluir",
+        cancelButtonText: "Cancelar",
+        confirmButtonColor: "#d33",
+        cancelButtonColor: "#3085d6"
+    });
+
+    if (!confirmacao.isConfirmed) return;
 
     const resposta = await fetch(`${API_URL}${id}/`, {
         method: "DELETE",
@@ -140,7 +169,13 @@ async function deletarEstado(id) {
         }
     });
     if (!resposta.ok) {
-        alert("Erro ao excluir estado");
+        Swal.fire({
+            icon: "error",
+            title: "Erro!",
+            text: "Erro ao deletar estado",
+            timer: 2000,
+            showConfirmButton: false
+         });
         console.error(await resposta.text());
         return;
     }

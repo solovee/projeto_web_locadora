@@ -168,3 +168,11 @@ header nav a:hover {
     from { transform: scale(0.85); }
     to   { transform: scale(1); }
 }
+
+.swal2-container {
+    z-index: 10000 !important;
+}
+
+.swal2-popup {
+    z-index: 10001 !important;
+}

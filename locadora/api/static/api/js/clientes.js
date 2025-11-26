@@ -30,7 +30,13 @@ async function carregarClientes() {
         console.error("Erro ao carregar clientes:", response.statusText);
         const errorText = await response.text();
         console.error("Resposta do servidor:", errorText);
-        alert("Erro ao carregar dados. Verifique o console do servidor (Django).");
+        Swal.fire({
+            icon: "error",
+            title: "Erro!",
+            text: "Erro ao carregar clientes",
+            timer: 2000,
+            showConfirmButton: false
+         });
         return; 
     }
     
@@ -136,7 +142,13 @@ async function criarCliente() {
         body: JSON.stringify(data)
     });
     if (!response.ok) {
-        alert("Erro ao criar cliente");
+        Swal.fire({
+            icon: "error",
+            title: "Erro!",
+            text: "Erro ao criar cliente",
+            timer: 2000,
+            showConfirmButton: false
+         });
         console.error(await response.text());
         return;
     }
@@ -169,7 +181,13 @@ async function salvarEdicao(id) {
         body: JSON.stringify(data)
     });
     if (!response.ok) {
-        alert("Erro ao editar cliente");
+        Swal.fire({
+            icon: "error",
+            title: "Erro!",
+            text: "Erro ao editar cliente",
+            timer: 2000,
+            showConfirmButton: false
+         });
         console.error(await response.text());
         return;
     }
@@ -179,7 +197,18 @@ async function salvarEdicao(id) {
 
 
 async function deletarCliente(id) {
-    if (!confirm("Tem certeza que deseja excluir este cliente?")) return;
+    const confirmacao = await Swal.fire({
+        title: "Tem certeza?",
+        text: "Deseja realmente excluir este cliente?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Sim, excluir",
+        cancelButtonText: "Cancelar",
+        confirmButtonColor: "#d33",
+        cancelButtonColor: "#3085d6"
+    });
+
+    if (!confirmacao.isConfirmed) return;
 
     const response = await fetch(`${API_URL}${id}/`, {
         method: "DELETE",
@@ -188,7 +217,13 @@ async function deletarCliente(id) {
         }
     });
     if (!response.ok) {
-        alert("Erro ao excluir cliente");
+        Swal.fire({
+            icon: "error",
+            title: "Erro!",
+            text: "Erro ao deletar cliente",
+            timer: 2000,
+            showConfirmButton: false
+         });
         console.error(await response.text());
         return;
     }
