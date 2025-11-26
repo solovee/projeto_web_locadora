@@ -22,14 +22,11 @@ router.register(r'midias', MidiaViewSet)
 router.register(r'locacoes', LocacaoViewSet)
 
 urlpatterns = [
-    # Templates
     path('atores/', views.ator_list, name='atores'),
     path('', views.home, name='home'),
 
-    # API do router
     path('api/', include(router.urls)),
     
-    # Templates adicionais
     path('cidades/', views.cidade_list, name='cidades'),
     path('clientes/', views.cliente_list, name='clientes'),
     path('estados/', views.estado_list, name='estados'),
@@ -41,15 +38,12 @@ urlpatterns = [
     path('generos/', views.genero_list, name='generos'),
     path('tipos/', views.tipo_list, name='tipos'),
 
-    # Página HTML de ItemLocacoes
     path("item_locacoes_page/", views.item_locacao_list, name="item_locacoes_page"),
 
-    # === ROTAS DA OPÇÃO A (API MANUAL, composite key) ===
     path("api/item_locacoes/", ItemLocacaoListCreateAPIView.as_view(), name="itemlocacao-listcreate"),
     path("api/item_locacoes/<int:locacao>/<int:exemplar>/", ItemLocacaoDetailAPIView.as_view(), name="itemlocacao-detail"),
     path('locacoes_full_page/', views.locacao_full_list, name='locacoes_full_page'), 
 
-    # API de Locação Full (para Listar e Criar)
     path("api/locacoes_full/", LocacaoFullListCreateAPIView.as_view(), name="locacao-full-listcreate"),
     path("api/locacoes_full/<int:id>/", LocacaoFullDetailAPIView.as_view(), name="locacao-full-detail"),
 ]

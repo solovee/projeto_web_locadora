@@ -2,15 +2,23 @@ from django.shortcuts import get_object_or_404, render
 
 from django.shortcuts import render
 from .models import Ator, Cidade, ClassificacaoEtaria, ClassificacaoInterna, Cliente, Exemplar, Genero, Midia, Locacao, Estado, Tipo, ItemLocacao
-
-
+from django.db import transaction
+from rest_framework import generics
+from rest_framework.exceptions import ValidationError
+from .models import ItemLocacao, Exemplar, Locacao, ClassificacaoInterna, Midia
+from .serializers import LocacaoFullSerializer 
 from rest_framework import viewsets
+from rest_framework import generics
+from django.shortcuts import get_object_or_404
+from .models import ItemLocacao, Exemplar
+from .serializers import ItemLocacaoSerializer
 from .serializers import AtorSerializer, CidadeSerializer, ClassificacaoEtariaSerializer, ClassificacaoInternaSerializer, ClienteSerializer, EstadoSerializer, ExemplarSerializer, GeneroSerializer, LocacaoSerializer, MidiaSerializer, TipoSerializer, ItemLocacaoSerializer
+
+
 
 class AtorViewSet(viewsets.ModelViewSet):
     queryset = Ator.objects.all()
     serializer_class = AtorSerializer
-
 
 class CidadeViewSet(viewsets.ModelViewSet):
     queryset = Cidade.objects.all()
@@ -53,36 +61,6 @@ class LocacaoViewSet(viewsets.ModelViewSet):
     queryset = Locacao.objects.all()
     serializer_class = LocacaoSerializer
 
-class ItemLocacaoViewSet(viewsets.ModelViewSet):
-    serializer_class = ItemLocacaoSerializer
-    queryset = ItemLocacao.objects.all()
-    lookup_field = None 
-
-    def get_object(self):
-        locacao = self.kwargs.get("locacao")
-        exemplar = self.kwargs.get("exemplar")
-
-        return get_object_or_404(
-            ItemLocacao,
-            locacao_id=locacao,
-            exemplar_codigo_interno=exemplar
-        )
-
-    def perform_create(self, serializer):
-        exemplar = Exemplar.objects.get(
-            codigo_interno=self.request.data["exemplar_codigo_interno"]
-        )
-
-        midia = exemplar.midia
-        classificacao = midia.classificacao_interna
-        valor = classificacao.valor_aluguel
-
-        serializer.save(valor=valor)
-
-from rest_framework import generics
-from django.shortcuts import get_object_or_404
-from .models import ItemLocacao, Exemplar
-from .serializers import ItemLocacaoSerializer
 
 class ItemLocacaoListCreateAPIView(generics.ListCreateAPIView):
     queryset = ItemLocacao.objects.all()
@@ -113,15 +91,6 @@ class ItemLocacaoDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
             exemplar_codigo_interno=exemplar
         )
     
-    # SeuApp/views.py
-
-from django.db import transaction
-from django.db.models import Sum
-from rest_framework import generics
-from rest_framework.exceptions import ValidationError
-from .models import ItemLocacao, Exemplar, Locacao, ClassificacaoInterna, Midia
-from .serializers import LocacaoFullSerializer 
-
 
 class LocacaoFullListCreateAPIView(generics.ListCreateAPIView):
     queryset = Locacao.objects.all().order_by('-id')
@@ -142,7 +111,7 @@ class LocacaoFullListCreateAPIView(generics.ListCreateAPIView):
             raise ValidationError({"exemplares_ids": "Um ou mais Exemplares não foram encontrados."})
             
         if any(e.disponivel <= 0 for e in exemplares_para_alugar):
-             raise ValidationError({"exemplares_ids": "Um ou mais Exemplares não estão disponíveis (estoque 0)."})
+            raise ValidationError({"exemplares_ids": "Um ou mais Exemplares não estão disponíveis (estoque 0)."})
 
         try:
             with transaction.atomic():
@@ -171,7 +140,7 @@ class LocacaoFullDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     def perform_update(self, serializer):
         """
         Permite apenas a edição do campo 'cancelada'.
-        Se 'cancelada' mudar para 1, reverte o estoque dos exemplares.
+        Se 'cancelada' mudar para 1, reverte o estoque dos exemplares
         """
         
         locacao_atual = self.get_object()
@@ -220,8 +189,6 @@ class LocacaoFullDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
 def locacao_full_list(request):
     """ Renderiza a página principal para gerenciar Locações e ItemLocações. """
     return render(request, 'locacoes_full.html')
-
-
 
 def ator_list(request):
     return render(request, 'ator.html') 
